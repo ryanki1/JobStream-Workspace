@@ -1,10 +1,48 @@
-# JobstreamWorkspace
+# JobStream Workspace
+
+**Nx Monorepo** für das JobStream-Projekt mit Angular Frontend, .NET API und Python ML Service.
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
-✨ Your new, shiny [Nx workspace](https://nx.dev) is ready ✨.
+## 🏗️ Struktur
 
-[Learn more about this workspace setup and its capabilities](https://nx.dev/nx-api/js?utm_source=nx_project&amp;utm_medium=readme&amp;utm_campaign=nx_projects) or run `npx nx graph` to visually explore what was created. Now, let's get you up to speed!
+```
+jobstream-workspace/
+├── apps/
+│   ├── admin-dashboard/         # Angular Admin Dashboard (Port 4200)
+│   ├── api/                     # .NET Core API (Port 5000)
+│   └── ml-service/              # Python ML Service (Port 8000)
+├── libs/
+│   └── shared/
+│       └── api-types/           # Shared TypeScript Types
+└── tools/
+```
+
+## 🚀 Quick Start
+
+### Alle Services starten (empfohlen)
+
+```bash
+npm start
+```
+
+Dies startet alle 3 Services parallel:
+- Angular Admin Dashboard: http://localhost:4200
+- .NET API: http://localhost:5000
+- Python ML Service: http://localhost:8000
+
+### Einzelne Services starten
+
+```bash
+# Nur Frontend
+npm run start:frontend
+
+# Nur API
+npm run start:api
+
+# Nur ML Service
+npm run start:ml
+```
 
 ## Generate a library
 

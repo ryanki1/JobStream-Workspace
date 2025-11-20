@@ -1,0 +1,178 @@
+<div class="registration-list">
+  <h1>Customer Verification</h1>
+
+  <!-- Loading State -->
+  @if (loading) {
+  <div class="loading">Loading registrations...</div>
+  }
+
+  <!-- Error State -->
+  @if (error) {
+  <div class="error">
+    {{ error }}
+    <button (click)="loadRegistrations()">Retry</button>
+  </div>
+  }
+
+  <!-- Registration Groups -->
+  @if (!loading && !error) {
+  <div>
+    <!-- Email Verification Pending -->
+    <div class="status-group">
+      <h2>Email Verification Pending</h2>
+      @for (reg of getRegistrationsByStatus(RegistrationStatus.Initiated); track
+      reg.id) {
+      <div
+        class="registration-card status-email-pending"
+        (click)="selectRegistration(reg.id!)"
+      >
+        <div class="card-content">
+          <div class="card-left">
+            <div class="field">
+              <strong>Legal Name:</strong> {{ reg.legalName }}
+            </div>
+            <div class="field">
+              <strong>Reg#:</strong> {{ reg.registrationNumber }}
+            </div>
+            <div class="field">
+              <strong>Industry:</strong> {{ reg.industry }}
+            </div>
+            <div class="field">
+              <strong>Email:</strong>
+              <a [href]="'mailto:' + reg.companyEmail">{{
+                reg.companyEmail
+              }}</a>
+            </div>
+          </div>
+          <div class="card-right">
+            <div class="field"><strong>Stake Amount:</strong> $5,000,000</div>
+            <div class="field text-right"><strong>Size:</strong> Medium</div>
+            <div class="field text-right">
+              <strong>Contact:</strong> {{ reg.primaryContactName }}
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Verification Pending -->
+    <div class="status-group">
+      <h2>Verification Pending</h2>
+      @for (reg of getRegistrationsByStatus(RegistrationStatus.PendingReview);
+      track reg.id) {
+      <div
+        class="registration-card status-verification-pending"
+        (click)="selectRegistration(reg.id!)"
+      >
+        <div class="card-content">
+          <div class="card-left">
+            <div class="field">
+              <strong>Legal Name:</strong> {{ reg.legalName }}
+            </div>
+            <div class="field">
+              <strong>Reg#:</strong> {{ reg.registrationNumber }}
+            </div>
+            <div class="field">
+              <strong>Industry:</strong> {{ reg.industry }}
+            </div>
+            <div class="field">
+              <strong>Email:</strong>&nbsp;
+              <a [href]="'mailto:' + reg.companyEmail">{{
+                reg.companyEmail
+              }}</a>
+            </div>
+          </div>
+          <div class="card-right">
+            <div class="field"><strong>Stake Amount:</strong> 
+              {{ reg.stakeAmount ? "€" + " " + reg.stakeAmount : "N.A." }}</div>
+            <div class="field text-right"><strong>Size:</strong> {{ reg.companySize }}</div>
+            <div class="field text-right">
+              <strong>Contact:</strong> {{ reg.primaryContactName }}
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Verification OK -->
+    <div class="status-group">
+      <h2>Verification OK</h2>
+      @for (reg of getRegistrationsByStatus(RegistrationStatus.Approved); track
+      reg.id) {
+      <div
+        class="registration-card status-approved"
+        (click)="selectRegistration(reg.id!)"
+      >
+        <div class="card-content">
+          <div class="card-left">
+            <div class="field">
+              <strong>Legal Name:</strong> {{ reg.legalName }}
+            </div>
+            <div class="field">
+              <strong>Vat Id:</strong> {{ reg.registrationNumber }}
+            </div>
+            <div class="field">
+              <strong>Industry:</strong> {{ reg.industry }}
+            </div>
+            <div class="field">
+              <strong>Email:</strong>
+              <a [href]="'mailto:' + reg.companyEmail">{{
+                reg.companyEmail
+              }}</a>
+            </div>
+          </div>
+          <div class="card-right">
+            <div class="field"><strong>Stake Amount:</strong> $3,000,000</div>
+            <div class="field text-right"><strong>Size:</strong> Small</div>
+            <div class="field text-right">
+              <strong>Contact:</strong> {{ reg.primaryContactName }}
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+
+    <!-- Verification Not OK -->
+    <div class="status-group">
+      <h2>Verification Not OK</h2>
+      @for (reg of getRegistrationsByStatus(RegistrationStatus.Rejected); track
+      reg.id) {
+      <div
+        class="registration-card status-rejected"
+        (click)="selectRegistration(reg.id!)"
+      >
+        <div class="card-content">
+          <div class="card-left">
+            <div class="field">
+              <strong>Legal Name:</strong> {{ reg.legalName }}
+            </div>
+            <div class="field">
+              <strong>Reg#:</strong> {{ reg.registrationNumber }}
+            </div>
+            <div class="field">
+              <strong>Industry:</strong> {{ reg.industry }}
+            </div>
+            <div class="field">
+              <strong>Email:</strong>
+              <a [href]="'mailto:' + reg.companyEmail">{{
+                reg.companyEmail
+              }}</a>
+            </div>
+          </div>
+          <div class="card-right">
+            <div class="field"><strong>Stake Amount:</strong> $750,000</div>
+            <div class="field text-right"><strong>Size:</strong> Large</div>
+            <div class="field text-right">
+              <strong>Contact:</strong> {{ reg.primaryContactName }}
+            </div>
+          </div>
+        </div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>

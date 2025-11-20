@@ -1,0 +1,226 @@
+@if (registration) {
+<div class="company-detail">
+  <h1>Company Details</h1>
+
+  <!-- Loading State -->
+  @if (loading) {
+  <div class="loading">Loading details...</div>
+  }
+
+  <!-- Error State -->
+  @if (error) {
+  <div class="error-message">
+    {{ error }}
+  </div>
+  }
+
+  <!-- ML Verification Section -->
+  @if (!loading) {
+  <div class="ml-verification-section">
+    <button
+      class="btn-verify"
+      (click)="triggerMLVerification()"
+      [disabled]="verifying"
+    >
+      {{ verifying ? 'Verifying...' : 'AI Verify' }}
+    </button>
+
+    @if (getLatestMLVerification(); as mlResult) {
+    <div class="ml-result">
+      <h3 class="ml-result-title">AI Verification Report</h3>
+
+      <div class="risk-score" [ngClass]="getRiskLevelClass(mlResult.riskLevel)">
+        <strong>Risk Score:</strong> {{ mlResult.overallRiskScore }}/100
+        <span class="risk-level">{{ mlResult.riskLevel }}</span>
+      </div>
+
+      <div class="confidence">
+        <strong>Confidence:</strong>
+        {{ (mlResult.confidence * 100).toFixed(0) }}%
+      </div>
+
+      <!-- Recommendations List -->
+      @if (getRecommendations(mlResult).length > 0) {
+      <div class="recommendations-section">
+        <h4>Recommendations</h4>
+        <ul class="recommendations-list">
+          @for (recommendation of getRecommendations(mlResult); track $index) {
+          <li>{{ recommendation }}</li>
+          }
+        </ul>
+      </div>
+      }
+
+      <!-- Web Intelligence Summary -->
+      @if (getWebIntelligence(mlResult); as webIntel) {
+      <div class="web-intelligence-section">
+        <h4>Web Intelligence Summary</h4>
+        <div class="web-intel-grid">
+          @if (webIntel.handelsregister) {
+          <div class="web-intel-item">
+            <strong>Handelsregister:</strong>
+            <span [ngClass]="webIntel.handelsregister.exists ? 'status-verified' : 'status-unverified'">
+              {{ webIntel.handelsregister.exists ? 'Verified' : 'Not Found' }}
+            </span>
+          </div>
+          }
+          @if (webIntel.vat_validation) {
+          <div class="web-intel-item">
+            <strong>VAT Validation:</strong>
+            <span [ngClass]="webIntel.vat_validation.valid ? 'status-verified' : 'status-unverified'">
+              {{ webIntel.vat_validation.valid ? 'Valid' : 'Invalid' }}
+            </span>
+            @if (webIntel.vat_validation.company_name) {
+            <div class="web-intel-detail">{{ webIntel.vat_validation.company_name }}</div>
+            }
+          </div>
+          }
+          @if (webIntel.website) {
+          <div class="web-intel-item">
+            <strong>Website:</strong>
+            <span [ngClass]="webIntel.website.accessible ? 'status-verified' : 'status-unverified'">
+              {{ webIntel.website.accessible ? 'Accessible' : 'Not Accessible' }}
+            </span>
+          </div>
+          }
+          @if (webIntel.linkedin) {
+          <div class="web-intel-item">
+            <strong>LinkedIn:</strong>
+            <span [ngClass]="webIntel.linkedin.found ? 'status-verified' : 'status-unverified'">
+              {{ webIntel.linkedin.found ? 'Found' : 'Not Found' }}
+            </span>
+          </div>
+          }
+          @if (webIntel.news_mentions !== undefined && webIntel.news_mentions !== null) {
+          <div class="web-intel-item">
+            <strong>News Mentions:</strong>
+            <span>{{ webIntel.news_mentions }} found</span>
+          </div>
+          }
+        </div>
+      </div>
+      }
+
+      <div class="verification-timestamp">
+        <small>Verified: {{ formatDate(mlResult.verifiedAt) }}</small>
+      </div>
+    </div>
+    }
+  </div>
+  }
+
+  <!-- Company Details -->
+  @if (!loading) {
+  <div class="details-grid">
+    <div class="detail-item">
+      <strong>Review Notes:</strong>
+      <span>{{ registration.reviewNotes || 'Detailed review required' }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Reviewed By:</strong>
+      <span>{{ registration.reviewedBy || 'Admin' }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Description:</strong>
+      <span>Verification pending due to document review</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Terms Accepted:</strong>
+      <span>Yes</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Vat Id:</strong>
+      <span>{{ registration.vatId }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Address:</strong>
+      <span
+        >{{ registration.address?.street }}, {{ registration.address?.postalCode }} {{ registration.address?.city }},
+        {{ registration.address?.country }}</span
+      >
+    </div>
+
+    <div class="detail-item">
+      <strong>Account Holder Name:</strong>
+      <span>{{ registration.primaryContactName }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Wallet Address:</strong>
+      <span class="monospace">{{
+        registration.walletAddress || '0xABC1234DEF5678'
+      }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Smart Contract Address:</strong>
+      <span class="monospace">0x9876543210FEDCBA</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Status:</strong>
+      <span [ngClass]="'status-' + registration.status">{{
+        registration.status
+      }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Reviewed At:</strong>
+      <span>{{ formatDate(registration.reviewedAt) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Expires At:</strong>
+      <span>2024-10-01</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Terms Accepted At:</strong>
+      <span>{{ formatDate(registration.createdAt) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Created At:</strong>
+      <span>{{ formatDate(registration.createdAt) }}</span>
+    </div>
+
+    <div class="detail-item">
+      <strong>Updated At:</strong>
+      <span>{{ formatDate(registration.updatedAt) }}</span>
+    </div>
+  </div>
+  }
+
+  <!-- Action Buttons -->
+  @if (!loading && registration.status === RegistrationStatus.PendingReview) {
+  <div class="action-buttons">
+    <button class="btn-accept" (click)="approve()" [disabled]="approving">
+      {{ approving ? 'Approving...' : 'Accept' }}
+    </button>
+    <button class="btn-block" (click)="reject()" [disabled]="rejecting">
+      {{ rejecting ? 'Blocking...' : 'Block' }}
+    </button>
+  </div>
+  }
+
+  <!-- Already Processed Message -->
+  @if (!loading && registration.status !== RegistrationStatus.PendingReview) {
+  <div class="processed-message">
+    @if (registration.status === RegistrationStatus.Approved) {
+    <p class="approved-msg">✓ This registration has been approved</p>
+    } @if (registration.status === RegistrationStatus.Rejected) {
+    <p class="rejected-msg">✗ This registration has been rejected</p>
+    }
+  </div>
+  }
+</div>
+} @if (!registration && !loading) {
+<div class="no-selection">
+  <p>Select a registration to view details</p>
+</div>
+}

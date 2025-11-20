@@ -1,0 +1,127 @@
+.registration-list {
+  padding: 2rem;
+  background-color: #f5f5f5;
+  min-height: 100vh;
+
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    color: #333;
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .loading,
+  .error {
+    padding: 2rem;
+    text-align: center;
+    background: white;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+  }
+
+  .error {
+    color: #d32f2f;
+
+    button {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+
+      &:hover {
+        background: #b71c1c;
+      }
+    }
+  }
+
+  .status-group {
+    margin-bottom: 2rem;
+  }
+
+  .registration-card {
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 2px solid transparent;
+
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-content {
+      display: flex;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .card-left {
+      flex: 1;
+    }
+
+    .card-right {
+      flex: 1;
+      text-align: right;
+    }
+
+    .field {
+      margin-bottom: 0.5rem;
+      font-size: 0.95rem;
+      line-height: 1.6;
+
+      strong {
+        font-weight: 600;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: underline;
+
+        &:hover {
+          text-decoration: none;
+        }
+      }
+
+      &.text-right {
+        text-align: right;
+      }
+    }
+  }
+
+  // Status-specific colors based on PDF design
+  .status-email-pending {
+    background-color: #ffe4d6;
+    border-color: #ff9866;
+    color: #333;
+  }
+
+  .status-verification-pending {
+    background-color: #fff8dc;
+    border-color: #f4d03f;
+    color: #333;
+  }
+
+  .status-approved {
+    background-color: #d4edda;
+    border-color: #28a745;
+    color: #155724;
+  }
+
+  .status-rejected {
+    background-color: #f8d7da;
+    border-color: #dc3545;
+    color: #721c24;
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "../dist/out-tsc",
+    "types": [],
+    "composite": false,
+    "emitDeclarationOnly": false,
+    "declarationMap": false,
+    "lib": ["ES2022", "dom"]
+  },
+  "include": ["src/**/*.ts"],
+  "exclude": [
+    "jest.config.ts",
+    "src/test-setup.ts",
+    "src/**/*.test.ts",
+    "src/**/*.spec.ts",
+    "jest.config.cts"
+  ],
+  "references": [
+    {
+      "path": "../../libs/shared/api-types/tsconfig.lib.json"
+    }
+  ]
+}

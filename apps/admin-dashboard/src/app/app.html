@@ -1,0 +1,13 @@
+<div class="admin-container">
+  <div class="left-panel">
+    <app-registration-list
+      (registrationSelected)="onRegistrationSelected($event)"
+    ></app-registration-list>
+  </div>
+  <div class="right-panel">
+    <app-company-detail
+      [registrationId]="selectedRegistrationId"
+      (actionCompleted)="onActionCompleted()"
+    ></app-company-detail>
+  </div>
+</div>
