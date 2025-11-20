@@ -1,0 +1,271 @@
+using Microsoft.EntityFrameworkCore;
+using JobStream.Api.Data;
+using JobStream.Api.Services;
+using JobStream.Api.Middleware;
+using JobStream.Api.Configuration;
+using Npgsql;
+
+var builder = WebApplication.CreateBuilder(args);
+
+// Add services to the container.
+
+// Ensure PostgreSQL database exists before configuring DbContext (only in Development)
+if (builder.Environment.IsDevelopment())
+{
+    EnsureDatabaseExists(builder.Configuration.GetConnectionString("DefaultConnection")!);
+}
+
+// Configure PostgreSQL Database
+builder.Services.AddDbContext<JobStreamDbContext>(options =>
+    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Register Infrastructure Services
+builder.Services.AddScoped<IStorageService, MockStorageService>();
+builder.Services.AddScoped<IEmailService, MockEmailService>();
+
+// Register Encryption Service (AES-256 for production, Mock for development)
+// To use real encryption, ensure Encryption:Key and Encryption:IV are set in appsettings.json
+if (builder.Environment.IsProduction())
+{
+    builder.Services.AddScoped<IEncryptionService, AesEncryptionService>();
+}
+else
+{
+    // For development, you can use either Mock or AES encryption
+    // Uncomment the line below to test with real AES encryption in development
+    builder.Services.AddScoped<IEncryptionService, AesEncryptionService>();
+    // builder.Services.AddScoped<IEncryptionService, MockEncryptionService>();
+}
+
+// Register Business Logic Services
+builder.Services.AddScoped<ICompanyRegistrationService, CompanyRegistrationService>();
+builder.Services.AddScoped<IJobPostingService, JobPostingService>();
+
+// Register ML Verification Service with Resilience Pipeline
+builder.Services.AddHttpClient<IMLVerificationService, MLVerificationService>()
+    .AddStandardResilienceHandler(options =>
+    {
+        // Retry policy: 3 attempts with exponential backoff
+        options.Retry.MaxRetryAttempts = 3;
+        options.Retry.BackoffType = Polly.DelayBackoffType.Exponential;
+        options.Retry.UseJitter = true;
+
+        // Circuit breaker: 50% failure threshold
+        options.CircuitBreaker.FailureRatio = 0.5;
+        options.CircuitBreaker.MinimumThroughput = 5;
+        options.CircuitBreaker.SamplingDuration = TimeSpan.FromSeconds(30);
+        options.CircuitBreaker.BreakDuration = TimeSpan.FromSeconds(30);
+
+        // Timeout: 10 seconds per request
+        options.TotalRequestTimeout.Timeout = TimeSpan.FromSeconds(10);
+    });
+
+// Configure Blockchain Settings
+builder.Services.Configure<BlockchainSettings>(options =>
+{
+    // Load from appsettings.json
+    builder.Configuration.GetSection("Blockchain").Bind(options);
+
+    // Override with environment variables if present (more secure for secrets)
+    var walletAddress = Environment.GetEnvironmentVariable("BLOCKCHAIN_WALLET_ADDRESS");
+    var privateKey = Environment.GetEnvironmentVariable("BLOCKCHAIN_PRIVATE_KEY");
+    var rpcUrl = Environment.GetEnvironmentVariable("BLOCKCHAIN_RPC_URL");
+    var contractAddress = Environment.GetEnvironmentVariable("BLOCKCHAIN_CONTRACT_ADDRESS");
+    var useMock = Environment.GetEnvironmentVariable("USE_MOCK_BLOCKCHAIN");
+
+    if (!string.IsNullOrEmpty(walletAddress)) options.WalletAddress = walletAddress;
+    if (!string.IsNullOrEmpty(privateKey)) options.PrivateKey = privateKey;
+    if (!string.IsNullOrEmpty(rpcUrl)) options.RpcUrl = rpcUrl;
+    if (!string.IsNullOrEmpty(contractAddress)) options.ContractAddress = contractAddress;
+    if (!string.IsNullOrEmpty(useMock)) options.UseMockService = bool.Parse(useMock);
+});
+
+// Register Blockchain Services
+// Use MockBlockchainService by default or when UseMockService is true
+// Switch to PolygonBlockchainService when ready for real blockchain integration
+var blockchainSettings = new BlockchainSettings();
+builder.Configuration.GetSection("Blockchain").Bind(blockchainSettings);
+var useMock = Environment.GetEnvironmentVariable("USE_MOCK_BLOCKCHAIN");
+if (!string.IsNullOrEmpty(useMock)) blockchainSettings.UseMockService = bool.Parse(useMock);
+
+if (blockchainSettings.UseMockService)
+{
+    builder.Services.AddScoped<IBlockchainService, MockBlockchainService>();
+    Console.WriteLine("Using MockBlockchainService for development");
+}
+else
+{
+    builder.Services.AddScoped<IBlockchainService, PolygonBlockchainService>();
+    Console.WriteLine($"Using PolygonBlockchainService - Network ChainId: {blockchainSettings.ChainId}");
+}
+
+// Configure CORS for Angular frontend
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AngularApp", policy =>
+    {
+        policy.WithOrigins("http://localhost:4200", "http://localhost:4201")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
+    });
+});
+
+// Add Controllers with JSON options
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+        options.JsonSerializerOptions.WriteIndented = true;
+    });
+
+// Configure Swagger/OpenAPI
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo
+    {
+        Title = "JobStream Company Registration API",
+        Version = "v1",
+        Description = "RESTful API for company registration workflow with multi-step verification",
+        Contact = new Microsoft.OpenApi.Models.OpenApiContact
+        {
+            Name = "JobStream Support",
+            Email = "support@jobstream.com"
+        }
+    });
+
+    // Enable XML comments if available
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    if (File.Exists(xmlPath))
+    {
+        options.IncludeXmlComments(xmlPath);
+    }
+});
+
+var app = builder.Build();
+
+// Apply database migrations
+using (var scope = app.Services.CreateScope())
+{
+    var dbContext = scope.ServiceProvider.GetRequiredService<JobStreamDbContext>();
+    dbContext.Database.Migrate();
+    app.Logger.LogInformation("Database migrations applied successfully");
+}
+
+// Configure the HTTP request pipeline.
+
+// Add global error handling middleware (should be first)
+app.UseErrorHandling();
+
+// Enable Swagger in all environments for easier testing
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    options.SwaggerEndpoint("/swagger/v1/swagger.json", "JobStream API v1");
+    options.RoutePrefix = "swagger";
+});
+
+app.UseHttpsRedirection();
+
+// Enable CORS
+app.UseCors("AngularApp");
+
+// Add rate limiting middleware
+app.UseRateLimiting();
+
+app.UseAuthorization();
+
+app.MapControllers();
+
+app.Logger.LogInformation("JobStream API is starting...");
+app.Logger.LogInformation("Swagger documentation available at: /swagger");
+app.Logger.LogInformation("Company Registration API endpoints:");
+app.Logger.LogInformation("  POST   /api/company/register/start");
+app.Logger.LogInformation("  POST   /api/company/register/verify-email");
+app.Logger.LogInformation("  PUT    /api/company/register/{{id}}/company-details");
+app.Logger.LogInformation("  POST   /api/company/register/{{id}}/documents");
+app.Logger.LogInformation("  POST   /api/company/register/{{id}}/financial-verification");
+app.Logger.LogInformation("  GET    /api/company/register/{{id}}/status");
+app.Logger.LogInformation("  POST   /api/company/register/{{id}}/submit");
+app.Logger.LogInformation("Admin API endpoints:");
+app.Logger.LogInformation("  GET    /api/admin/registrations/pending");
+app.Logger.LogInformation("  GET    /api/admin/registrations/{{id}}");
+app.Logger.LogInformation("  POST   /api/admin/registrations/{{id}}/verify-ml");
+app.Logger.LogInformation("  GET    /api/admin/registrations/{{id}}/ml-history");
+app.Logger.LogInformation("  POST   /api/admin/registrations/{{id}}/approve");
+app.Logger.LogInformation("  POST   /api/admin/registrations/{{id}}/reject");
+app.Logger.LogInformation("  GET    /api/admin/statistics");
+
+app.Run();
+
+// Helper method to ensure database and user exist
+static void EnsureDatabaseExists(string connectionString)
+{
+    var builder = new NpgsqlConnectionStringBuilder(connectionString);
+    var databaseName = builder.Database;
+    var username = builder.Username;
+    var password = builder.Password;
+
+    // Connect to 'postgres' database using the default postgres user
+    var postgresBuilder = new NpgsqlConnectionStringBuilder
+    {
+        Host = builder.Host,
+        Port = builder.Port,
+        Database = "postgres",
+        Username = Environment.GetEnvironmentVariable("PGUSER") ?? Environment.UserName, // Use current OS user
+        // No password for local development (trust authentication)
+    };
+
+    try
+    {
+        using var connection = new NpgsqlConnection(postgresBuilder.ToString());
+        connection.Open();
+
+        // Check if user exists
+        using var checkUserCmd = new NpgsqlCommand($"SELECT 1 FROM pg_roles WHERE rolname = '{username}'", connection);
+        var userExists = checkUserCmd.ExecuteScalar() != null;
+
+        if (!userExists)
+        {
+            Console.WriteLine($"User '{username}' does not exist. Creating...");
+
+            // Create the user
+            using var createUserCmd = new NpgsqlCommand($"CREATE USER {username} WITH PASSWORD '{password}'", connection);
+            createUserCmd.ExecuteNonQuery();
+
+            Console.WriteLine($"User '{username}' created successfully.");
+        }
+        else
+        {
+            Console.WriteLine($"User '{username}' already exists.");
+        }
+
+        // Check if database exists
+        using var checkDbCmd = new NpgsqlCommand($"SELECT 1 FROM pg_database WHERE datname = '{databaseName}'", connection);
+        var dbExists = checkDbCmd.ExecuteScalar() != null;
+
+        if (!dbExists)
+        {
+            Console.WriteLine($"Database '{databaseName}' does not exist. Creating...");
+
+            // Create the database
+            using var createDbCmd = new NpgsqlCommand($"CREATE DATABASE {databaseName} OWNER {username}", connection);
+            createDbCmd.ExecuteNonQuery();
+
+            Console.WriteLine($"Database '{databaseName}' created successfully.");
+        }
+        else
+        {
+            Console.WriteLine($"Database '{databaseName}' already exists.");
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Error ensuring database exists: {ex.Message}");
+        Console.WriteLine($"Note: Make sure PostgreSQL is running and your current user has access.");
+        Console.WriteLine($"You can grant access with: CREATE USER {Environment.UserName} SUPERUSER;");
+        throw;
+    }
+}

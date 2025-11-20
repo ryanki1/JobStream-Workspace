@@ -1,0 +1,66 @@
+{
+  "name": "api",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/api",
+  "projectType": "application",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet run --project apps/api/JobStream.Api.csproj",
+        "cwd": ".",
+        "color": true
+      },
+      "configurations": {
+        "production": {
+          "command": "dotnet run --project apps/api/JobStream.Api.csproj --configuration Release"
+        }
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet build apps/api/JobStream.Api.csproj",
+        "cwd": ".",
+        "color": true
+      },
+      "configurations": {
+        "production": {
+          "command": "dotnet build apps/api/JobStream.Api.csproj --configuration Release"
+        }
+      }
+    },
+    "test": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet test apps/api/JobStream.Api.Tests/JobStream.Api.Tests.csproj",
+        "cwd": ".",
+        "color": true
+      }
+    },
+    "restore": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet restore apps/api/JobStream.Api.csproj",
+        "cwd": ".",
+        "color": true
+      }
+    },
+    "migrate": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "dotnet ef database update --project apps/api/JobStream.Api.csproj",
+        "cwd": ".",
+        "color": true
+      }
+    },
+    "swagger": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "curl http://localhost:5000/swagger/v1/swagger.json -o apps/api/swagger.json",
+        "cwd": "."
+      }
+    }
+  },
+  "tags": ["type:api", "platform:dotnet"]
+}
