@@ -21,7 +21,26 @@ builder.Services.AddDbContext<JobStreamDbContext>(options =>
 
 // Register Infrastructure Services
 builder.Services.AddScoped<IStorageService, MockStorageService>();
-builder.Services.AddScoped<IEmailService, MockEmailService>();
+
+// Register Email Service (Mock or SMTP based on configuration)
+var useEmailMock = builder.Configuration.GetValue<bool>("Email:UseMockService", true);
+var useEmailMockEnv = Environment.GetEnvironmentVariable("USE_MOCK_EMAIL_SERVICE");
+if (!string.IsNullOrEmpty(useEmailMockEnv))
+{
+    useEmailMock = bool.Parse(useEmailMockEnv);
+}
+
+if (useEmailMock)
+{
+    builder.Services.AddScoped<IEmailService, MockEmailService>();
+    Console.WriteLine("Using MockEmailService for development (emails will be logged, not sent)");
+}
+else
+{
+    builder.Services.AddScoped<IEmailService, SmtpEmailService>();
+    var smtpHost = builder.Configuration["Email:Smtp:Host"];
+    Console.WriteLine($"Using SmtpEmailService - SMTP Host: {smtpHost}");
+}
 
 // Register Encryption Service (AES-256 for production, Mock for development)
 // To use real encryption, ensure Encryption:Key and Encryption:IV are set in appsettings.json

@@ -1,0 +1,97 @@
+<div class="verify-email-container">
+  <div class="verify-email-card">
+    <!-- Loading State -->
+    @if (isVerifying()) {
+      <div class="verification-loading">
+        <div class="spinner"></div>
+        <h2>E-Mail wird verifiziert...</h2>
+        <p>Bitte warten Sie einen Moment.</p>
+      </div>
+    }
+
+    <!-- Success State -->
+    @if (verificationSuccess() && !isVerifying()) {
+      <div class="verification-success">
+        <div class="success-icon">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="40" fill="#10B981" fill-opacity="0.1"/>
+            <path d="M25 40L35 50L55 30" stroke="#10B981" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <h2>E-Mail erfolgreich bestätigt! ✓</h2>
+        <p class="success-message">
+          Ihre E-Mail-Adresse wurde erfolgreich verifiziert.
+        </p>
+        <div class="next-steps">
+          <h3>Nächste Schritte:</h3>
+          <ol>
+            <li>Vervollständigen Sie Ihre Unternehmensdaten</li>
+            <li>Laden Sie die erforderlichen Dokumente hoch</li>
+            <li>Reichen Sie Ihre Registrierung zur Überprüfung ein</li>
+          </ol>
+        </div>
+        <button class="btn btn-primary" (click)="continueRegistration()">
+          Weiter zur Registrierung →
+        </button>
+      </div>
+    }
+
+    <!-- Error State -->
+    @if (verificationError() && !isVerifying()) {
+      <div class="verification-error">
+        <div class="error-icon">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="40" fill="#EF4444" fill-opacity="0.1"/>
+            <path d="M30 30L50 50M50 30L30 50" stroke="#EF4444" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2>Verifizierung fehlgeschlagen</h2>
+        <p class="error-message">{{ errorMessage() }}</p>
+
+        <div class="error-reasons">
+          <h3>Mögliche Gründe:</h3>
+          <ul>
+            <li>Der Verifizierungslink ist abgelaufen (gültig für 24 Stunden)</li>
+            <li>Der Link wurde bereits verwendet</li>
+            <li>Der Link ist ungültig oder beschädigt</li>
+          </ul>
+        </div>
+
+        <div class="error-actions">
+          <button class="btn btn-secondary" (click)="requestNewVerificationEmail()">
+            Neuen Verifizierungslink anfordern
+          </button>
+          <button class="btn btn-outline" (click)="goToHome()">
+            Zur Startseite
+          </button>
+        </div>
+      </div>
+    }
+
+    <!-- Missing Parameters State -->
+    @if (missingParameters() && !isVerifying()) {
+      <div class="verification-error">
+        <div class="error-icon">
+          <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
+            <circle cx="40" cy="40" r="40" fill="#F59E0B" fill-opacity="0.1"/>
+            <path d="M40 25V45M40 55V57" stroke="#F59E0B" stroke-width="4" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <h2>Ungültiger Link</h2>
+        <p class="error-message">
+          Der Verifizierungslink ist ungültig. Bitte verwenden Sie den Link aus Ihrer E-Mail.
+        </p>
+        <button class="btn btn-outline" (click)="goToHome()">
+          Zur Startseite
+        </button>
+      </div>
+    }
+  </div>
+
+  <!-- Info Footer -->
+  <div class="info-footer">
+    <p>
+      <strong>Hinweis:</strong> Verifizierungslinks sind 24 Stunden gültig und können nur einmal verwendet werden.
+    </p>
+  </div>
+</div>
