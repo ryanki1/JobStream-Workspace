@@ -23,7 +23,7 @@ builder.Services.AddDbContext<JobStreamDbContext>(options =>
 builder.Services.AddScoped<IStorageService, MockStorageService>();
 
 // Register Email Service (Mock or SMTP based on configuration)
-var useEmailMock = builder.Configuration.GetValue<bool>("Email:UseMockService", true);
+var useEmailMock = builder.Configuration.GetValue<bool>("Email:UseMockService", false);
 var useEmailMockEnv = Environment.GetEnvironmentVariable("USE_MOCK_EMAIL_SERVICE");
 if (!string.IsNullOrEmpty(useEmailMockEnv))
 {

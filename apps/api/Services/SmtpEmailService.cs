@@ -54,6 +54,8 @@ public class SmtpEmailService : IEmailService
             {
                 Credentials = new NetworkCredential(_smtpUsername, _smtpPassword),
                 EnableSsl = _enableSsl,
+                UseDefaultCredentials = false,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
                 Timeout = 30000 // 30 seconds
             };
 

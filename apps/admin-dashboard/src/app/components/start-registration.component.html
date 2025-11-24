@@ -1,0 +1,164 @@
+<div class="registration-container">
+  <div class="registration-card">
+    @if (!submitted()) {
+      <!-- Registration Form -->
+      <div class="registration-form">
+        <div class="header">
+          <div class="logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+              <circle cx="9" cy="7" r="4"></circle>
+              <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+            </svg>
+          </div>
+          <h1>Unternehmensregistrierung</h1>
+          <p class="subtitle">Starten Sie Ihre Registrierung bei JobStream</p>
+        </div>
+
+        <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+          @if (errorMessage()) {
+            <div class="error-banner">
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" y1="8" x2="12" y2="12"></line>
+                <line x1="12" y1="16" x2="12.01" y2="16"></line>
+              </svg>
+              <span>{{ errorMessage() }}</span>
+            </div>
+          }
+
+          <div class="form-group">
+            <label for="companyEmail">Geschäftliche E-Mail-Adresse *</label>
+            <input
+              id="companyEmail"
+              type="email"
+              formControlName="companyEmail"
+              placeholder="kontakt@ihrunternehmen.de"
+              [class.error]="companyEmail?.invalid && companyEmail?.touched"
+            />
+            @if (companyEmail?.invalid && companyEmail?.touched) {
+              <div class="field-error">
+                @if (companyEmail?.errors?.['required']) {
+                  <span>E-Mail-Adresse ist erforderlich</span>
+                }
+                @if (companyEmail?.errors?.['email']) {
+                  <span>Bitte geben Sie eine gültige E-Mail-Adresse ein</span>
+                }
+                @if (companyEmail?.errors?.['freeEmailProvider']) {
+                  <span>Bitte verwenden Sie eine geschäftliche E-Mail-Adresse (keine privaten Anbieter wie Gmail, Yahoo, etc.)</span>
+                }
+              </div>
+            }
+            <small class="field-hint">Verwenden Sie Ihre Unternehmens-E-Mail-Adresse</small>
+          </div>
+
+          <div class="form-group">
+            <label for="primaryContactName">Vollständiger Name *</label>
+            <input
+              id="primaryContactName"
+              type="text"
+              formControlName="primaryContactName"
+              placeholder="Max Mustermann"
+              [class.error]="primaryContactName?.invalid && primaryContactName?.touched"
+            />
+            @if (primaryContactName?.invalid && primaryContactName?.touched) {
+              <div class="field-error">
+                @if (primaryContactName?.errors?.['required']) {
+                  <span>Name ist erforderlich</span>
+                }
+                @if (primaryContactName?.errors?.['minlength']) {
+                  <span>Name muss mindestens 2 Zeichen lang sein</span>
+                }
+              </div>
+            }
+            <small class="field-hint">Ihr vollständiger Name als Hauptansprechpartner</small>
+          </div>
+
+          <button
+            type="submit"
+            class="submit-button"
+            [disabled]="isSubmitting()"
+          >
+            @if (isSubmitting()) {
+              <span class="spinner"></span>
+              <span>Wird gesendet...</span>
+            } @else {
+              <span>Registrierung starten</span>
+            }
+          </button>
+        </form>
+
+        <div class="info-text">
+          <p>
+            Nach dem Absenden erhalten Sie eine E-Mail mit einem Bestätigungslink.
+            Dieser Link ist 24 Stunden gültig.
+          </p>
+        </div>
+      </div>
+    } @else {
+      <!-- Success State -->
+      <div class="registration-success">
+        <div class="success-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+          </svg>
+        </div>
+
+        <h2>Registrierung erfolgreich gestartet!</h2>
+
+        <div class="success-message">
+          <p>
+            Wir haben eine Bestätigungs-E-Mail an <strong>{{ registrationForm.get('companyEmail')?.value }}</strong> gesendet.
+          </p>
+        </div>
+
+        <div class="next-steps">
+          <h3>Nächste Schritte:</h3>
+          <ol>
+            <li>
+              <strong>E-Mail prüfen:</strong> Öffnen Sie Ihr E-Mail-Postfach und suchen Sie nach der E-Mail von JobStream.
+            </li>
+            <li>
+              <strong>Link anklicken:</strong> Klicken Sie auf den Bestätigungslink in der E-Mail, um Ihre E-Mail-Adresse zu verifizieren.
+            </li>
+            <li>
+              <strong>Registrierung fortsetzen:</strong> Nach der Bestätigung können Sie mit der Eingabe Ihrer Unternehmensdaten fortfahren.
+            </li>
+          </ol>
+        </div>
+
+        <div class="info-box">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"></circle>
+            <line x1="12" y1="16" x2="12" y2="12"></line>
+            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+          </svg>
+          <div>
+            <p><strong>Keine E-Mail erhalten?</strong></p>
+            <p>Prüfen Sie Ihren Spam-Ordner. Der Bestätigungslink ist 24 Stunden gültig.</p>
+          </div>
+        </div>
+
+        <div class="registration-id">
+          <small>Registrierungs-ID: {{ registrationId() }}</small>
+        </div>
+
+        <button class="secondary-button" (click)="goToHome()">
+          Zur Startseite
+        </button>
+      </div>
+    }
+  </div>
+
+  <div class="info-footer">
+    <p>
+      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="10"></circle>
+        <polyline points="12 6 12 12 16 14"></polyline>
+      </svg>
+      Der Bestätigungslink ist 24 Stunden gültig
+    </p>
+  </div>
+</div>
