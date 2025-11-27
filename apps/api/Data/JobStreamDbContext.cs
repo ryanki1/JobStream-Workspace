@@ -14,6 +14,8 @@ public class JobStreamDbContext : DbContext
     public DbSet<RegistrationDocument> RegistrationDocuments => Set<RegistrationDocument>();
     public DbSet<JobPosting> JobPostings => Set<JobPosting>();
     public DbSet<MLVerificationResult> MLVerificationResults => Set<MLVerificationResult>();
+    public DbSet<User> Users => Set<User>();
+    public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -155,6 +157,77 @@ public class JobStreamDbContext : DbContext
             // Default value
             entity.Property(e => e.VerifiedAt)
                 .HasDefaultValueSql("now()");
+        });
+
+        // Configure User entity
+        modelBuilder.Entity<User>(entity =>
+        {
+            entity.ToTable("Users");
+
+            // Primary key
+            entity.HasKey(e => e.Id);
+
+            // Indexes for performance
+            entity.HasIndex(e => e.Email)
+                .IsUnique();
+
+            entity.HasIndex(e => e.Role);
+
+            entity.HasIndex(e => e.CompanyRegistrationId);
+
+            entity.HasIndex(e => e.CreatedAt);
+
+            // Convert enum to string for storage
+            entity.Property(e => e.Role)
+                .HasConversion<string>();
+
+            // Default values
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()");
+
+            entity.Property(e => e.IsActive)
+                .HasDefaultValue(true);
+
+            entity.Property(e => e.EmailVerified)
+                .HasDefaultValue(false);
+
+            // Foreign key relationship to CompanyRegistration (optional)
+            entity.HasOne(e => e.CompanyRegistration)
+                .WithMany()
+                .HasForeignKey(e => e.CompanyRegistrationId)
+                .OnDelete(DeleteBehavior.SetNull);
+        });
+
+        // Configure PasswordResetToken entity
+        modelBuilder.Entity<PasswordResetToken>(entity =>
+        {
+            entity.ToTable("PasswordResetTokens");
+
+            // Primary key
+            entity.HasKey(e => e.Id);
+
+            // Indexes for performance
+            entity.HasIndex(e => e.Token)
+                .IsUnique();
+
+            entity.HasIndex(e => e.UserId);
+
+            entity.HasIndex(e => e.ExpiresAt);
+
+            entity.HasIndex(e => e.Used);
+
+            // Default values
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("now()");
+
+            entity.Property(e => e.Used)
+                .HasDefaultValue(false);
+
+            // Foreign key relationship to User
+            entity.HasOne(e => e.User)
+                .WithMany()
+                .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
     }
 }

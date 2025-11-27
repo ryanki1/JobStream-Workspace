@@ -59,6 +59,8 @@ else
 // Register Business Logic Services
 builder.Services.AddScoped<ICompanyRegistrationService, CompanyRegistrationService>();
 builder.Services.AddScoped<IJobPostingService, JobPostingService>();
+builder.Services.AddScoped<IJwtService, JwtService>();
+builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
 
 // Register ML Verification Service with Resilience Pipeline
 builder.Services.AddHttpClient<IMLVerificationService, MLVerificationService>()
@@ -118,6 +120,35 @@ else
     Console.WriteLine($"Using PolygonBlockchainService - Network ChainId: {blockchainSettings.ChainId}");
 }
 
+// Configure JWT Authentication
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    var jwtSecret = builder.Configuration["Jwt:Secret"]
+        ?? throw new InvalidOperationException("JWT Secret not configured");
+    var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+    var jwtAudience = builder.Configuration["Jwt:Audience"];
+
+    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtAudience,
+        IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
+            System.Text.Encoding.UTF8.GetBytes(jwtSecret))
+    };
+});
+
+// Configure Authorization
+builder.Services.AddAuthorization();
+
 // Configure CORS for Angular frontend
 builder.Services.AddCors(options =>
 {
@@ -151,6 +182,31 @@ builder.Services.AddSwaggerGen(options =>
         {
             Name = "JobStream Support",
             Email = "support@jobstream.com"
+        }
+    });
+
+    // Add JWT Bearer authentication to Swagger
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Description = "JWT Authorization header using the Bearer scheme. Enter 'Bearer' [space] and then your token.",
+        Name = "Authorization",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.ApiKey,
+        Scheme = "Bearer"
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            Array.Empty<string>()
         }
     });
 
@@ -191,10 +247,14 @@ app.UseHttpsRedirection();
 // Enable CORS
 app.UseCors("AngularApp");
 
+// Add authentication middleware (must come before authorization)
+app.UseAuthentication();
+
+// Add authorization middleware
+app.UseAuthorization();
+
 // Add rate limiting middleware
 app.UseRateLimiting();
-
-app.UseAuthorization();
 
 app.MapControllers();
 

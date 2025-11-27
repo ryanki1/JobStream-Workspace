@@ -1,9 +1,11 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using JobStream.Api.Data;
 using JobStream.Api.Models;
 using JobStream.Api.Services;
+using System.Security.Claims;
 
 namespace JobStream.Api.Controllers;
 
@@ -12,6 +14,7 @@ namespace JobStream.Api.Controllers;
 /// </summary>
 [ApiController]
 [Route("api/admin")]
+[Authorize(Roles = "Admin")]
 public class AdminController : ControllerBase
 {
     private readonly JobStreamDbContext _context;
@@ -272,10 +275,13 @@ public class AdminController : ControllerBase
             });
         }
 
+        // Get admin email from JWT claims
+        var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+
         // Update registration status
         registration.Status = RegistrationStatus.Approved;
         registration.ReviewedAt = DateTime.UtcNow;
-        registration.ReviewedBy = "admin"; // TODO: Replace with actual admin user from JWT claims
+        registration.ReviewedBy = adminEmail;
         registration.ReviewNotes = request?.Notes;
         registration.UpdatedAt = DateTime.UtcNow;
 
@@ -324,10 +330,13 @@ public class AdminController : ControllerBase
             });
         }
 
+        // Get admin email from JWT claims
+        var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+
         // Update registration status
         registration.Status = RegistrationStatus.Rejected;
         registration.ReviewedAt = DateTime.UtcNow;
-        registration.ReviewedBy = "admin"; // TODO: Replace with actual admin user from JWT claims
+        registration.ReviewedBy = adminEmail;
         registration.ReviewNotes = request.Reason;
         registration.UpdatedAt = DateTime.UtcNow;
 
