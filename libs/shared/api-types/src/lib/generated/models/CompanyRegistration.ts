@@ -2,9 +2,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { Address } from './Address';
-import type { RegistrationDocument } from './RegistrationDocument';
-import type { RegistrationStatus } from './RegistrationStatus';
+import type { Address } from './Address.js';
+import type { RegistrationDocument } from './RegistrationDocument.js';
+import type { RegistrationStatus } from './RegistrationStatus.js';
 export type CompanyRegistration = {
     id?: string;
     companyEmail: string;

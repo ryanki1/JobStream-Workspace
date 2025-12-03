@@ -2,13 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CreateJobPostingRequest } from '../models/CreateJobPostingRequest';
-import type { JobPostingActionResponse } from '../models/JobPostingActionResponse';
-import type { JobPostingResponse } from '../models/JobPostingResponse';
-import type { UpdateJobPostingRequest } from '../models/UpdateJobPostingRequest';
-import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { CreateJobPostingRequest } from '../models/CreateJobPostingRequest.js';
+import type { JobPostingActionResponse } from '../models/JobPostingActionResponse.js';
+import type { JobPostingResponse } from '../models/JobPostingResponse.js';
+import type { UpdateJobPostingRequest } from '../models/UpdateJobPostingRequest.js';
+import type { CancelablePromise } from '../core/CancelablePromise.js';
+import { OpenAPI } from '../core/OpenAPI.js';
+import { request as __request } from '../core/request.js';
 export class JobPostingService {
     /**
      * @returns JobPostingActionResponse Created

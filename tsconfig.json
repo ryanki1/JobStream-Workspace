@@ -5,6 +5,18 @@
   "references": [
     {
       "path": "./libs/shared/api-types"
+    },
+    {
+      "path": "./libs/shared/ui"
+    },
+    {
+      "path": "./apps/admin-dashboard"
     }
-  ]
+  ],
+  "compilerOptions": {
+    "paths": {
+      "@jobstream-workspace/shared-ui": ["./libs/shared/ui/src/index.ts"],
+      "@jobstream-workspace/shared/api-types": ["./libs/shared/api-types/src/index.ts"]
+    }
+  }
 }

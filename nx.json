@@ -93,6 +93,11 @@
     },
     "@nx/angular:component": {
       "style": "scss"
+    },
+    "@nx/angular:guard": {
+      "flat": false, 
+      "skipTests": false, 
+      "functional": true 
     }
   }
 }

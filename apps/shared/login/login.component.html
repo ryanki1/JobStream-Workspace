@@ -1,0 +1,12 @@
+@if (form) {
+    <div [formGroup]="form" class="form" R>
+        <div class="header">
+            <img src="assets/logon-icon.svg" width="32" height="32" alt="Login Icon">
+        </div>
+        <input type="text" formControlName="email">
+        <input type="text" formControlName="password">
+        <input type="text" readonly formControlName="role">   
+        <button type="submit" (click)="login()">Login</button>
+        <div class="footer"></div>
+    </div>
+}

@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ErrorDetails } from './ErrorDetails';
+import type { ErrorDetails } from './ErrorDetails.js';
 export type ErrorResponse = {
     error?: boolean;
     code?: string | null;

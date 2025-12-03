@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PaymentStructureDto } from './PaymentStructureDto';
+import type { PaymentStructureDto } from './PaymentStructureDto.js';
 export type CreateJobPostingRequest = {
     companyId: string;
     title: string;

@@ -2,13 +2,13 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { ApproveRegistrationRequest } from '../models/ApproveRegistrationRequest';
-import type { CompanyRegistration } from '../models/CompanyRegistration';
-import type { MLVerificationResult } from '../models/MLVerificationResult';
-import type { RejectRegistrationRequest } from '../models/RejectRegistrationRequest';
-import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { ApproveRegistrationRequest } from '../models/ApproveRegistrationRequest.js';
+import type { CompanyRegistration } from '../models/CompanyRegistration.js';
+import type { MLVerificationResult } from '../models/MLVerificationResult.js';
+import type { RejectRegistrationRequest } from '../models/RejectRegistrationRequest.js';
+import type { CancelablePromise } from '../core/CancelablePromise.js';
+import { OpenAPI } from '../core/OpenAPI.js';
+import { request as __request } from '../core/request.js';
 export class AdminService {
     /**
      * @returns CompanyRegistration Success

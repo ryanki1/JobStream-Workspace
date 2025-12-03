@@ -4,7 +4,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "experimentalDecorators": true,
     "moduleResolution": "bundler",
-    "module": "preserve"
+    "module": "esnext"
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,
@@ -18,6 +18,15 @@
   "references": [
     {
       "path": "../../libs/shared/api-types"
+    },
+    {
+      "path": "../../libs/shared/ui"
+    },
+    {
+      "path": "@jobstream-workspace/shared/api-types"
+    },
+    {
+      "path": "@jobstream-workspace/libs/shared/ui"
     },
     {
       "path": "./tsconfig.app.json"

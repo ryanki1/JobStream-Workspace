@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AddressDto } from './AddressDto';
+import type { AddressDto } from './AddressDto.js';
 export type UpdateCompanyDetailsRequest = {
     legalName: string;
     registrationNumber: string;

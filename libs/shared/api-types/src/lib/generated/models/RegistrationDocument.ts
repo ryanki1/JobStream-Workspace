@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CompanyRegistration } from './CompanyRegistration';
+import type { CompanyRegistration } from './CompanyRegistration.js';
 export type RegistrationDocument = {
     id?: string;
     companyRegistrationId: string;

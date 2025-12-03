@@ -2,8 +2,8 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { CompanyRegistration } from './CompanyRegistration';
-import type { RiskLevel } from './RiskLevel';
+import type { CompanyRegistration } from './CompanyRegistration.js';
+import type { RiskLevel } from './RiskLevel.js';
 export type MLVerificationResult = {
     id?: string;
     registrationId: string;

@@ -2,7 +2,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { PaymentStructureDto } from './PaymentStructureDto';
+import type { PaymentStructureDto } from './PaymentStructureDto.js';
 export type JobPostingResponse = {
     id?: string;
     blockchainPostingId?: number | null;

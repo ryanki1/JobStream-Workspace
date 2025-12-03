@@ -2,21 +2,21 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { FinancialVerificationRequest } from '../models/FinancialVerificationRequest';
-import type { FinancialVerificationResponse } from '../models/FinancialVerificationResponse';
-import type { RegistrationStatusResponse } from '../models/RegistrationStatusResponse';
-import type { StartRegistrationRequest } from '../models/StartRegistrationRequest';
-import type { StartRegistrationResponse } from '../models/StartRegistrationResponse';
-import type { SubmitRegistrationRequest } from '../models/SubmitRegistrationRequest';
-import type { SubmitRegistrationResponse } from '../models/SubmitRegistrationResponse';
-import type { UpdateCompanyDetailsRequest } from '../models/UpdateCompanyDetailsRequest';
-import type { UpdateCompanyDetailsResponse } from '../models/UpdateCompanyDetailsResponse';
-import type { UploadDocumentResponse } from '../models/UploadDocumentResponse';
-import type { VerifyEmailRequest } from '../models/VerifyEmailRequest';
-import type { VerifyEmailResponse } from '../models/VerifyEmailResponse';
-import type { CancelablePromise } from '../core/CancelablePromise';
-import { OpenAPI } from '../core/OpenAPI';
-import { request as __request } from '../core/request';
+import type { FinancialVerificationRequest } from '../models/FinancialVerificationRequest.js';
+import type { FinancialVerificationResponse } from '../models/FinancialVerificationResponse.js';
+import type { RegistrationStatusResponse } from '../models/RegistrationStatusResponse.js';
+import type { StartRegistrationRequest } from '../models/StartRegistrationRequest.js';
+import type { StartRegistrationResponse } from '../models/StartRegistrationResponse.js';
+import type { SubmitRegistrationRequest } from '../models/SubmitRegistrationRequest.js';
+import type { SubmitRegistrationResponse } from '../models/SubmitRegistrationResponse.js';
+import type { UpdateCompanyDetailsRequest } from '../models/UpdateCompanyDetailsRequest.js';
+import type { UpdateCompanyDetailsResponse } from '../models/UpdateCompanyDetailsResponse.js';
+import type { UploadDocumentResponse } from '../models/UploadDocumentResponse.js';
+import type { VerifyEmailRequest } from '../models/VerifyEmailRequest.js';
+import type { VerifyEmailResponse } from '../models/VerifyEmailResponse.js';
+import type { CancelablePromise } from '../core/CancelablePromise.js';
+import { OpenAPI } from '../core/OpenAPI.js';
+import { request as __request } from '../core/request.js';
 export class CompanyRegistrationService {
     /**
      * @returns StartRegistrationResponse Created

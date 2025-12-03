@@ -1,5 +1,5 @@
 {
-  "name": "@jobstream/api-types",
+  "name": "@jobstream-workspace/api-types",
   "version": "0.0.1",
   "private": true,
   "type": "module",

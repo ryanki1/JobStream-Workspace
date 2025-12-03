@@ -19,6 +19,9 @@
   "references": [
     {
       "path": "../../libs/shared/api-types/tsconfig.lib.json"
+    },
+    {
+      "path": "../../libs/shared/ui"
     }
   ]
 }

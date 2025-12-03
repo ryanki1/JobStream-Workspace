@@ -1,7 +1,7 @@
 import { Component, inject, input, output, effect } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { CompanyRegistration, MLVerificationResult, RegistrationStatus } from '@jobstream/api-types';
+import { CompanyRegistration, MLVerificationResult, RegistrationStatus } from '@jobstream-workspace/api-types';
 import { AdminApiService } from '../services/admin-api.service';
 
 @Component({

@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, output, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CompanyRegistration, RegistrationStatus } from '@jobstream/api-types';
+import { CompanyRegistration, RegistrationStatus } from '@jobstream-workspace/api-types';
 import { AdminApiService } from '../services/admin-api.service';
 
 @Component({

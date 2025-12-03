@@ -2,12 +2,30 @@ import { Route } from '@angular/router';
 import { VerifyEmailComponent } from './components/verify-email.component';
 import { RegistrationListComponent } from './components/registration-list.component';
 import { StartRegistrationComponent } from './components/start-registration.component';
+import { authGuard } from './guards/auth.guard';
+import { LoginComponent } from '@jobstream-workspace/shared-ui';
 
 export const appRoutes: Route[] = [
+   {
+    path: 'login',
+    component: LoginComponent,
+    title: 'Login - JobStream',
+  },
+    {
+    path: 'admin-list',
+    component: RegistrationListComponent,
+    canActivate: [authGuard],
+    title: 'Admin - JobStream'
+  },
   {
     path: 'admin',
-    component: RegistrationListComponent,
-    title: 'Admin - JobStream'
+    redirectTo: '/admin-list',
+    pathMatch: 'full'
+  },
+  {
+    path: 'register',
+    redirectTo: '/register/start',
+    pathMatch: 'full'
   },
   {
     path: 'register/start',

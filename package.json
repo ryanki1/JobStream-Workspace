@@ -24,7 +24,7 @@
     "graph": "nx graph",
     "affected:test": "nx affected --target=test",
     "affected:build": "nx affected --target=build",
-    "generate:api-types": "openapi --input http://localhost:5001/swagger/v1/swagger.json --output ./libs/shared/api-types/src/lib/generated --client axios --useOptions --useUnionTypes"
+    "generate:api-types": "openapi --input http://localhost:5252/swagger/v1/swagger.json --output ./libs/shared/api-types/src/lib/generated --client axios --useOptions --useUnionTypes && node scripts/fix-openapi-imports.mjs"
   },
   "private": true,
   "devDependencies": {

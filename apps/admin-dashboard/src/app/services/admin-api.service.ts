@@ -9,7 +9,7 @@ import {
   ApproveRegistrationRequest,
   RejectRegistrationRequest,
   RegistrationDetailResponse
-} from '@jobstream/api-types';
+} from '@jobstream-workspace/api-types';
 import { environment } from '../../environments/environment';
 
 @Injectable({

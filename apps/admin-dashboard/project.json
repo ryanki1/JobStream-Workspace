@@ -21,7 +21,8 @@
             "input": "apps/admin-dashboard/public"
           }
         ],
-        "styles": ["apps/admin-dashboard/src/styles.scss"]
+        "styles": ["apps/admin-dashboard/src/styles.scss"],
+        "allowedCommonJsDependencies": ["form-data"]
       },
       "configurations": {
         "production": {
