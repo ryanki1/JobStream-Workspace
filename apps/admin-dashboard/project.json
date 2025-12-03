@@ -19,6 +19,11 @@
           {
             "glob": "**/*",
             "input": "apps/admin-dashboard/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/shared/ui/src/assets",
+            "output": "assets/shared-ui"
           }
         ],
         "styles": ["apps/admin-dashboard/src/styles.scss"],

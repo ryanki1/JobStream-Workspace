@@ -7,20 +7,32 @@
     align-items: center;
 }
 .form {
+    .header {
+        display: flex;
+        justify-content: center;
+    }
     display: flex;
     width: 100%;
     max-width: 30rem;
     height: 30rem;
     padding: 2rem;
+    border-radius: 1rem;
     flex-direction: column;
     justify-content:space-evenly;
+    filter: brightness(1.5);
     background-color: cadetblue;
     input, button {
         padding: 1rem;
         font-size: 1rem;
+        outline: none;
     }
     button {
+        border: solid 3px #778BA8;
+        font-weight: bold;
+        border-radius: .25rem;
+        filter: brightness(0.7);
+        cursor: pointer;
         color: white;
-        background-color: darkgreen;
+        background-color: #4fe1ff;
     }
 }
