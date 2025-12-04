@@ -4,6 +4,7 @@ import {
   LoginRequest,
 } from '@jobstream-workspace/shared/api-types';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
 
   public readonly fb = inject(FormBuilder);
   public form!: FormGroup;
+  private router = inject(Router);
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -34,6 +36,7 @@ export class LoginComponent implements OnInit {
       (response: { token?: string }) => {
         if (response.token) {
           localStorage.setItem('token', response.token)
+          this.router.navigateByUrl('admin');
         }
       }
     );

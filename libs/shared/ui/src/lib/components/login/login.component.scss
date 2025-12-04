@@ -26,13 +26,18 @@
         font-size: 1rem;
         outline: none;
     }
+    input {
+        &:read-only {
+            filter: brightness(0.6);
+        }
+    }
     button {
         border: solid 3px #778BA8;
         font-weight: bold;
         border-radius: .25rem;
         filter: brightness(0.7);
         cursor: pointer;
-        color: white;
+        color: #778BA8;
         background-color: #4fe1ff;
     }
 }

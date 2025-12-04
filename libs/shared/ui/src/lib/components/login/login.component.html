@@ -1,12 +1,12 @@
 @if (form) {
-    <div [formGroup]="form" class="form" R>
+    <form [formGroup]="form" class="form" (ngSubmit)="login()">
         <div class="header">
             <img src="assets/shared-ui/logon-icon.svg" width="96" height="96" alt="Login Icon">
         </div>
         <input type="text" formControlName="email" placeholder="E-Mail">
-        <input type="text" formControlName="password" placeholder="Password">
+        <input type="password" formControlName="password" placeholder="Password">
         <input type="text" readonly formControlName="role">
-        <button type="submit" (click)="login()">Login</button>
+        <button type="submit">Login</button>
         <div class="footer"></div>
-    </div>
+    </form>
 }
