@@ -16,6 +16,7 @@ public class JobStreamDbContext : DbContext
     public DbSet<MLVerificationResult> MLVerificationResults => Set<MLVerificationResult>();
     public DbSet<User> Users => Set<User>();
     public DbSet<PasswordResetToken> PasswordResetTokens => Set<PasswordResetToken>();
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -227,6 +228,42 @@ public class JobStreamDbContext : DbContext
             entity.HasOne(e => e.User)
                 .WithMany()
                 .HasForeignKey(e => e.UserId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Configure AuditLog entity
+        modelBuilder.Entity<AuditLog>(entity =>
+        {
+            entity.ToTable("AuditLogs");
+
+            // Primary key
+            entity.HasKey(e => e.Id);
+
+            // Indexes for performance
+            entity.HasIndex(e => e.CompanyRegistrationId);
+
+            entity.HasIndex(e => e.Action);
+
+            entity.HasIndex(e => e.Timestamp);
+
+            entity.HasIndex(e => e.PerformedBy);
+
+            // Convert enum to string for storage
+            entity.Property(e => e.Action)
+                .HasConversion<string>();
+
+            // Default value
+            entity.Property(e => e.Timestamp)
+                .HasDefaultValueSql("now()");
+
+            // JSON column stored as TEXT
+            entity.Property(e => e.DetailsJson)
+                .HasColumnType("TEXT");
+
+            // Foreign key relationship to CompanyRegistration
+            entity.HasOne(e => e.CompanyRegistration)
+                .WithMany()
+                .HasForeignKey(e => e.CompanyRegistrationId)
                 .OnDelete(DeleteBehavior.Cascade);
         });
     }

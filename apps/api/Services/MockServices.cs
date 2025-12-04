@@ -16,6 +16,8 @@ public interface IEmailService
     Task SendEmailVerificationAsync(string to, string companyName, Guid registrationId, string verificationToken);
     Task SendRegistrationConfirmationAsync(string to, string companyName, Guid registrationId);
     Task SendStatusUpdateAsync(string to, string companyName, string status, string? notes = null);
+    Task SendApprovalEmailAsync(string to, string companyName, string? notes = null);
+    Task SendRejectionEmailAsync(string to, string companyName, string reason);
 }
 
 // Encryption Service Interface
@@ -201,6 +203,89 @@ JobStream Team
 
         _logger.LogInformation("MockEmailService: Sending status update to {To} for {CompanyName}. Status: {Status}",
             to, companyName, status);
+        _logger.LogInformation("Email Body:\n{Body}", body);
+
+        return Task.CompletedTask;
+    }
+
+    public Task SendApprovalEmailAsync(string to, string companyName, string? notes = null)
+    {
+        var subject = "🎉 Ihre Registrierung wurde genehmigt - JobStream";
+        var body = $@"
+Sehr geehrtes Team von {companyName},
+
+wir freuen uns, Ihnen mitteilen zu können, dass Ihre Registrierung bei JobStream erfolgreich genehmigt wurde!
+
+{(notes != null ? $@"Anmerkungen vom Admin-Team:
+{notes}
+
+" : "")}Nächste Schritte:
+1. Sie erhalten in Kürze eine separate E-Mail mit Ihren Zugangsdaten
+2. Nach der Aktivierung können Sie sofort Ihre ersten Job-Angebote erstellen
+3. Unser Support-Team steht Ihnen jederzeit zur Verfügung
+
+Was Sie jetzt tun können:
+- Job-Postings erstellen und veröffentlichen
+- Freelancer Profile durchsuchen
+- Projekte verwalten
+
+Bei Fragen oder Unterstützungsbedarf können Sie uns jederzeit unter support@jobstream.com erreichen.
+
+Willkommen bei JobStream!
+
+Mit freundlichen Grüßen
+Das JobStream Team
+
+---
+JobStream - Die Plattform für qualifizierte Freelancer-Vermittlung
+www.jobstream.com | support@jobstream.com
+";
+
+        _logger.LogInformation("MockEmailService: Sending APPROVAL email to {To} for {CompanyName}",
+            to, companyName);
+        _logger.LogInformation("Email Subject: {Subject}", subject);
+        _logger.LogInformation("Email Body:\n{Body}", body);
+
+        return Task.CompletedTask;
+    }
+
+    public Task SendRejectionEmailAsync(string to, string companyName, string reason)
+    {
+        var subject = "Ihre Registrierung bei JobStream - Entscheidung";
+        var body = $@"
+Sehr geehrtes Team von {companyName},
+
+vielen Dank für Ihr Interesse an JobStream und Ihre eingereichte Registrierung.
+
+Nach sorgfältiger Prüfung Ihrer Unterlagen müssen wir Ihnen leider mitteilen, dass wir Ihre Registrierung zum jetzigen Zeitpunkt nicht genehmigen können.
+
+Grund der Ablehnung:
+{reason}
+
+Was bedeutet das?
+Diese Entscheidung ist nicht endgültig. Sollten sich die genannten Punkte ändern oder Sie zusätzliche Informationen bereitstellen können, können Sie gerne eine erneute Registrierung einreichen.
+
+Nächste Schritte:
+- Prüfen Sie die genannten Gründe
+- Bereiten Sie ggf. zusätzliche Nachweise vor
+- Reichen Sie eine neue Registrierung ein, sobald die Voraussetzungen erfüllt sind
+
+Bei Fragen zu dieser Entscheidung oder wenn Sie zusätzliche Informationen bereitstellen möchten, kontaktieren Sie uns bitte unter support@jobstream.com.
+
+Wir danken Ihnen für Ihr Verständnis.
+
+Mit freundlichen Grüßen
+Das JobStream Team
+
+---
+JobStream - Die Plattform für qualifizierte Freelancer-Vermittlung
+www.jobstream.com | support@jobstream.com
+";
+
+        _logger.LogInformation("MockEmailService: Sending REJECTION email to {To} for {CompanyName}",
+            to, companyName);
+        _logger.LogInformation("Rejection Reason: {Reason}", reason);
+        _logger.LogInformation("Email Subject: {Subject}", subject);
         _logger.LogInformation("Email Body:\n{Body}", body);
 
         return Task.CompletedTask;

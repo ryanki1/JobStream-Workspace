@@ -61,6 +61,7 @@ builder.Services.AddScoped<ICompanyRegistrationService, CompanyRegistrationServi
 builder.Services.AddScoped<IJobPostingService, JobPostingService>();
 builder.Services.AddScoped<IJwtService, JwtService>();
 builder.Services.AddScoped<IPasswordResetService, PasswordResetService>();
+builder.Services.AddScoped<IAuditLogService, AuditLogService>();
 
 // Register ML Verification Service with Resilience Pipeline
 builder.Services.AddHttpClient<IMLVerificationService, MLVerificationService>()
@@ -273,6 +274,7 @@ app.Logger.LogInformation("  GET    /api/admin/registrations/pending");
 app.Logger.LogInformation("  GET    /api/admin/registrations/{{id}}");
 app.Logger.LogInformation("  POST   /api/admin/registrations/{{id}}/verify-ml");
 app.Logger.LogInformation("  GET    /api/admin/registrations/{{id}}/ml-history");
+app.Logger.LogInformation("  GET    /api/admin/registrations/{{id}}/audit-history");
 app.Logger.LogInformation("  POST   /api/admin/registrations/{{id}}/approve");
 app.Logger.LogInformation("  POST   /api/admin/registrations/{{id}}/reject");
 app.Logger.LogInformation("  GET    /api/admin/statistics");

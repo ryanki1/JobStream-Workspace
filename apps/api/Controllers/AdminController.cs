@@ -19,15 +19,21 @@ public class AdminController : ControllerBase
 {
     private readonly JobStreamDbContext _context;
     private readonly IMLVerificationService _mlVerificationService;
+    private readonly IAuditLogService _auditLogService;
+    private readonly IEmailService _emailService;
     private readonly ILogger<AdminController> _logger;
 
     public AdminController(
         JobStreamDbContext context,
         IMLVerificationService mlVerificationService,
+        IAuditLogService auditLogService,
+        IEmailService emailService,
         ILogger<AdminController> logger)
     {
         _context = context;
         _mlVerificationService = mlVerificationService;
+        _auditLogService = auditLogService;
+        _emailService = emailService;
         _logger = logger;
     }
 
@@ -130,9 +136,35 @@ public class AdminController : ControllerBase
 
         try
         {
+            // Get admin email from JWT claims
+            var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+
             _logger.LogInformation("Admin triggered ML verification for registration {RegistrationId}", id);
 
+            // Log ML verification request
+            await _auditLogService.LogActionAsync(
+                registrationId: id,
+                action: AuditAction.MLVerificationRequested,
+                performedBy: adminEmail,
+                details: new { companyName = registration.LegalName },
+                ipAddress: HttpContext.Connection.RemoteIpAddress?.ToString(),
+                userAgent: HttpContext.Request.Headers.UserAgent.ToString()
+            );
+
             var result = await _mlVerificationService.VerifyCompanyAsync(registration);
+
+            // Log ML verification completion
+            await _auditLogService.LogActionAsync(
+                registrationId: id,
+                action: AuditAction.MLVerificationCompleted,
+                performedBy: "System",
+                details: new
+                {
+                    riskLevel = result.RiskLevel.ToString(),
+                    riskScore = result.OverallRiskScore,
+                    confidence = result.Confidence
+                }
+            );
 
             _logger.LogInformation(
                 "ML verification completed for registration {RegistrationId}. Risk: {RiskLevel} ({RiskScore})",
@@ -172,6 +204,32 @@ public class AdminController : ControllerBase
                 message = ex.Message
             });
         }
+    }
+
+    /// <summary>
+    /// Get audit history for a registration
+    /// </summary>
+    [HttpGet("registrations/{id}/audit-history")]
+    [ProducesResponseType(typeof(List<AuditLog>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    public async Task<IActionResult> GetAuditHistory(Guid id)
+    {
+        var registration = await _context.CompanyRegistrations
+            .FirstOrDefaultAsync(r => r.Id == id);
+
+        if (registration == null)
+        {
+            return NotFound(new { error = "Registration not found" });
+        }
+
+        var history = await _auditLogService.GetRegistrationHistoryAsync(id);
+
+        return Ok(new
+        {
+            registrationId = id,
+            auditLogCount = history.Count,
+            auditLogs = history
+        });
     }
 
     /// <summary>
@@ -277,6 +335,7 @@ public class AdminController : ControllerBase
 
         // Get admin email from JWT claims
         var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+        var previousStatus = registration.Status.ToString();
 
         // Update registration status
         registration.Status = RegistrationStatus.Approved;
@@ -287,6 +346,31 @@ public class AdminController : ControllerBase
 
         await _context.SaveChangesAsync();
 
+        // Log to audit trail
+        await _auditLogService.LogActionAsync(
+            registrationId: id,
+            action: AuditAction.RegistrationApproved,
+            performedBy: adminEmail,
+            details: new
+            {
+                companyName = registration.LegalName,
+                companyEmail = registration.CompanyEmail,
+                notes = request?.Notes
+            },
+            ipAddress: HttpContext.Connection.RemoteIpAddress?.ToString(),
+            userAgent: HttpContext.Request.Headers.UserAgent.ToString()
+        );
+
+        // Log status change
+        await _auditLogService.LogStatusChangeAsync(
+            registrationId: id,
+            previousStatus: previousStatus,
+            newStatus: registration.Status.ToString(),
+            performedBy: adminEmail,
+            ipAddress: HttpContext.Connection.RemoteIpAddress?.ToString(),
+            userAgent: HttpContext.Request.Headers.UserAgent.ToString()
+        );
+
         _logger.LogInformation(
             "Registration {RegistrationId} approved by {ReviewedBy}. Company: {LegalName}",
             id,
@@ -294,7 +378,21 @@ public class AdminController : ControllerBase
             registration.LegalName
         );
 
-        // TODO: Send approval email to company
+        // Send approval email to company
+        try
+        {
+            await _emailService.SendApprovalEmailAsync(
+                registration.CompanyEmail,
+                registration.LegalName ?? "Unknown Company",
+                request?.Notes
+            );
+            _logger.LogInformation("Approval email sent to {Email}", registration.CompanyEmail);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send approval email to {Email}", registration.CompanyEmail);
+            // Don't fail the request if email fails - registration is already approved
+        }
 
         return Ok(registration);
     }
@@ -332,6 +430,7 @@ public class AdminController : ControllerBase
 
         // Get admin email from JWT claims
         var adminEmail = User.FindFirst(ClaimTypes.Email)?.Value ?? "unknown";
+        var previousStatus = registration.Status.ToString();
 
         // Update registration status
         registration.Status = RegistrationStatus.Rejected;
@@ -342,6 +441,31 @@ public class AdminController : ControllerBase
 
         await _context.SaveChangesAsync();
 
+        // Log to audit trail
+        await _auditLogService.LogActionAsync(
+            registrationId: id,
+            action: AuditAction.RegistrationRejected,
+            performedBy: adminEmail,
+            details: new
+            {
+                companyName = registration.LegalName,
+                companyEmail = registration.CompanyEmail,
+                reason = request.Reason
+            },
+            ipAddress: HttpContext.Connection.RemoteIpAddress?.ToString(),
+            userAgent: HttpContext.Request.Headers.UserAgent.ToString()
+        );
+
+        // Log status change
+        await _auditLogService.LogStatusChangeAsync(
+            registrationId: id,
+            previousStatus: previousStatus,
+            newStatus: registration.Status.ToString(),
+            performedBy: adminEmail,
+            ipAddress: HttpContext.Connection.RemoteIpAddress?.ToString(),
+            userAgent: HttpContext.Request.Headers.UserAgent.ToString()
+        );
+
         _logger.LogInformation(
             "Registration {RegistrationId} rejected by {ReviewedBy}. Company: {LegalName}. Reason: {Reason}",
             id,
@@ -350,7 +474,21 @@ public class AdminController : ControllerBase
             request.Reason
         );
 
-        // TODO: Send rejection email to company with reason
+        // Send rejection email to company with reason
+        try
+        {
+            await _emailService.SendRejectionEmailAsync(
+                registration.CompanyEmail,
+                registration.LegalName ?? "Unknown Company",
+                request.Reason
+            );
+            _logger.LogInformation("Rejection email sent to {Email}", registration.CompanyEmail);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Failed to send rejection email to {Email}", registration.CompanyEmail);
+            // Don't fail the request if email fails - registration is already rejected
+        }
 
         return Ok(registration);
     }

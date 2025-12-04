@@ -479,4 +479,338 @@ Das JobStream Team
 
         await SendEmailAsync(to, subject, htmlBody, isHtml: true);
     }
+
+    public async Task SendApprovalEmailAsync(string to, string companyName, string? notes = null)
+    {
+        var subject = "🎉 Ihre Registrierung wurde genehmigt - JobStream";
+
+        var htmlBody = $@"
+<!DOCTYPE html>
+<html lang=""de"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>{subject}</title>
+</head>
+<body style=""margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;"">
+    <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #f4f4f4; padding: 20px 0;"">
+        <tr>
+            <td align=""center"">
+                <table width=""600"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"">
+                    <!-- Header -->
+                    <tr>
+                        <td style=""background: linear-gradient(135deg, #28a745 0%, #20c997 100%); padding: 50px 30px; text-align: center;"">
+                            <div style=""font-size: 60px; margin-bottom: 10px;"">🎉</div>
+                            <h1 style=""color: #ffffff; margin: 0; font-size: 32px; font-weight: bold;"">Herzlichen Glückwunsch!</h1>
+                            <p style=""color: #ffffff; margin: 10px 0 0 0; font-size: 18px; opacity: 0.95;"">Ihre Registrierung wurde genehmigt</p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style=""padding: 40px 30px;"">
+                            <h2 style=""color: #333333; margin: 0 0 20px 0; font-size: 24px;"">Sehr geehrtes Team von {companyName},</h2>
+
+                            <p style=""color: #666666; font-size: 16px; line-height: 1.8; margin: 0 0 30px 0;"">
+                                wir freuen uns, Ihnen mitteilen zu können, dass Ihre <strong>Registrierung bei JobStream erfolgreich genehmigt wurde</strong>!
+                                Sie können nun alle Funktionen unserer Plattform nutzen.
+                            </p>
+
+                            {(notes != null ? $@"
+                            <!-- Admin Notes -->
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #e8f5e9; border-left: 4px solid #28a745; margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 20px;"">
+                                        <p style=""color: #2e7d32; font-size: 14px; margin: 0 0 10px 0; font-weight: bold;"">
+                                            📝 Anmerkungen vom Admin-Team:
+                                        </p>
+                                        <p style=""color: #1b5e20; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-line;"">
+                                            {notes}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            " : "")}
+
+                            <!-- Next Steps -->
+                            <h3 style=""color: #333333; margin: 0 0 20px 0; font-size: 20px;"">🚀 Ihre nächsten Schritte:</h3>
+
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 15px 0; border-bottom: 1px solid #eeeeee;"">
+                                        <table width=""100%"">
+                                            <tr>
+                                                <td width=""40"" valign=""top"">
+                                                    <div style=""width: 32px; height: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; color: #ffffff; text-align: center; line-height: 32px; font-weight: bold;"">1</div>
+                                                </td>
+                                                <td>
+                                                    <p style=""color: #333333; font-weight: bold; margin: 0 0 5px 0; font-size: 15px;"">
+                                                        Zugangsdaten erhalten
+                                                    </p>
+                                                    <p style=""color: #999999; font-size: 14px; margin: 0; line-height: 1.5;"">
+                                                        Sie erhalten in Kürze eine separate E-Mail mit Ihren persönlichen Zugangsdaten
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style=""padding: 15px 0; border-bottom: 1px solid #eeeeee;"">
+                                        <table width=""100%"">
+                                            <tr>
+                                                <td width=""40"" valign=""top"">
+                                                    <div style=""width: 32px; height: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; color: #ffffff; text-align: center; line-height: 32px; font-weight: bold;"">2</div>
+                                                </td>
+                                                <td>
+                                                    <p style=""color: #333333; font-weight: bold; margin: 0 0 5px 0; font-size: 15px;"">
+                                                        Job-Angebote erstellen
+                                                    </p>
+                                                    <p style=""color: #999999; font-size: 14px; margin: 0; line-height: 1.5;"">
+                                                        Veröffentlichen Sie Ihre ersten Stellenangebote und erreichen Sie qualifizierte Freelancer
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style=""padding: 15px 0;"">
+                                        <table width=""100%"">
+                                            <tr>
+                                                <td width=""40"" valign=""top"">
+                                                    <div style=""width: 32px; height: 32px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 50%; color: #ffffff; text-align: center; line-height: 32px; font-weight: bold;"">3</div>
+                                                </td>
+                                                <td>
+                                                    <p style=""color: #333333; font-weight: bold; margin: 0 0 5px 0; font-size: 15px;"">
+                                                        Plattform erkunden
+                                                    </p>
+                                                    <p style=""color: #999999; font-size: 14px; margin: 0; line-height: 1.5;"">
+                                                        Durchsuchen Sie Freelancer-Profile und verwalten Sie Ihre Projekte
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Features Highlight -->
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #f8f9fa; border-radius: 6px; margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 25px;"">
+                                        <p style=""color: #333333; font-weight: bold; margin: 0 0 15px 0; font-size: 16px;"">
+                                            ✨ Was Sie jetzt tun können:
+                                        </p>
+                                        <ul style=""color: #666666; font-size: 14px; line-height: 1.8; margin: 0; padding-left: 20px;"">
+                                            <li style=""margin-bottom: 8px;"">Job-Postings erstellen und veröffentlichen</li>
+                                            <li style=""margin-bottom: 8px;"">Freelancer Profile durchsuchen</li>
+                                            <li style=""margin-bottom: 8px;"">Projekte verwalten und tracken</li>
+                                            <li style=""margin-bottom: 0;"">Mit unserem Support-Team Kontakt aufnehmen</li>
+                                        </ul>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Support Box -->
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #e3f2fd; border-left: 4px solid #2196f3; margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 20px;"">
+                                        <p style=""color: #1565c0; font-size: 14px; line-height: 1.6; margin: 0;"">
+                                            <strong>💡 Benötigen Sie Hilfe?</strong><br>
+                                            Unser Support-Team steht Ihnen jederzeit unter <a href=""mailto:support@jobstream.com"" style=""color: #1565c0; font-weight: bold;"">support@jobstream.com</a> zur Verfügung.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style=""color: #666666; font-size: 15px; line-height: 1.6; margin: 0 0 10px 0;"">
+                                Willkommen bei JobStream!
+                            </p>
+
+                            <p style=""color: #666666; font-size: 15px; line-height: 1.6; margin: 0;"">
+                                Mit freundlichen Grüßen<br>
+                                <strong>Das JobStream Team</strong>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style=""background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #eeeeee;"">
+                            <p style=""color: #999999; font-size: 13px; line-height: 1.6; margin: 0 0 10px 0;"">
+                                <strong>JobStream - Die Plattform für qualifizierte Freelancer-Vermittlung</strong>
+                            </p>
+                            <p style=""color: #cccccc; font-size: 12px; margin: 0 0 10px 0;"">
+                                www.jobstream.com | support@jobstream.com
+                            </p>
+                            <p style=""color: #cccccc; font-size: 12px; margin: 0;"">
+                                © {DateTime.UtcNow.Year} JobStream. Alle Rechte vorbehalten.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>";
+
+        _logger.LogInformation("Sending APPROVAL email to {To} for {CompanyName}", to, companyName);
+
+        await SendEmailAsync(to, subject, htmlBody, isHtml: true);
+    }
+
+    public async Task SendRejectionEmailAsync(string to, string companyName, string reason)
+    {
+        var subject = "Ihre Registrierung bei JobStream - Entscheidung";
+
+        var htmlBody = $@"
+<!DOCTYPE html>
+<html lang=""de"">
+<head>
+    <meta charset=""UTF-8"">
+    <meta name=""viewport"" content=""width=device-width, initial-scale=1.0"">
+    <title>{subject}</title>
+</head>
+<body style=""margin: 0; padding: 0; font-family: Arial, sans-serif; background-color: #f4f4f4;"">
+    <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #f4f4f4; padding: 20px 0;"">
+        <tr>
+            <td align=""center"">
+                <table width=""600"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #ffffff; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 4px rgba(0,0,0,0.1);"">
+                    <!-- Header -->
+                    <tr>
+                        <td style=""background: linear-gradient(135deg, #6c757d 0%, #495057 100%); padding: 40px 30px; text-align: center;"">
+                            <h1 style=""color: #ffffff; margin: 0; font-size: 28px; font-weight: bold;"">Registrierungs-Entscheidung</h1>
+                            <p style=""color: #ffffff; margin: 10px 0 0 0; font-size: 16px; opacity: 0.9;"">JobStream</p>
+                        </td>
+                    </tr>
+
+                    <!-- Content -->
+                    <tr>
+                        <td style=""padding: 40px 30px;"">
+                            <h2 style=""color: #333333; margin: 0 0 20px 0; font-size: 24px;"">Sehr geehrtes Team von {companyName},</h2>
+
+                            <p style=""color: #666666; font-size: 16px; line-height: 1.8; margin: 0 0 30px 0;"">
+                                vielen Dank für Ihr Interesse an JobStream und Ihre eingereichte Registrierung.
+                            </p>
+
+                            <p style=""color: #666666; font-size: 16px; line-height: 1.8; margin: 0 0 30px 0;"">
+                                Nach sorgfältiger Prüfung Ihrer Unterlagen müssen wir Ihnen leider mitteilen, dass wir Ihre Registrierung <strong>zum jetzigen Zeitpunkt nicht genehmigen können</strong>.
+                            </p>
+
+                            <!-- Reason Box -->
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #fff3cd; border-left: 4px solid #ffc107; margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 20px;"">
+                                        <p style=""color: #856404; font-weight: bold; margin: 0 0 10px 0; font-size: 15px;"">
+                                            📋 Grund der Ablehnung:
+                                        </p>
+                                        <p style=""color: #856404; font-size: 14px; line-height: 1.6; margin: 0; white-space: pre-line;"">
+                                            {reason}
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Info Box -->
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #e3f2fd; border-left: 4px solid #2196f3; margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 20px;"">
+                                        <p style=""color: #1565c0; font-size: 14px; line-height: 1.6; margin: 0;"">
+                                            <strong>ℹ️ Was bedeutet das?</strong><br>
+                                            Diese Entscheidung ist <strong>nicht endgültig</strong>. Sollten sich die genannten Punkte ändern oder Sie zusätzliche Informationen bereitstellen können, können Sie gerne eine erneute Registrierung einreichen.
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Next Steps -->
+                            <h3 style=""color: #333333; margin: 0 0 20px 0; font-size: 20px;"">🔄 Ihre nächsten Schritte:</h3>
+
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 12px 0; border-bottom: 1px solid #eeeeee;"">
+                                        <p style=""color: #333333; font-weight: bold; margin: 0 0 5px 0; font-size: 14px;"">
+                                            1️⃣ Prüfen Sie die genannten Gründe
+                                        </p>
+                                        <p style=""color: #999999; font-size: 13px; margin: 0; line-height: 1.5;"">
+                                            Nehmen Sie sich Zeit, die Ablehnungsgründe zu verstehen und zu bearbeiten
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style=""padding: 12px 0; border-bottom: 1px solid #eeeeee;"">
+                                        <p style=""color: #333333; font-weight: bold; margin: 0 0 5px 0; font-size: 14px;"">
+                                            2️⃣ Bereiten Sie zusätzliche Nachweise vor
+                                        </p>
+                                        <p style=""color: #999999; font-size: 13px; margin: 0; line-height: 1.5;"">
+                                            Sammeln Sie ggf. fehlende Dokumente oder Informationen
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style=""padding: 12px 0;"">
+                                        <p style=""color: #333333; font-weight: bold; margin: 0 0 5px 0; font-size: 14px;"">
+                                            3️⃣ Reichen Sie eine neue Registrierung ein
+                                        </p>
+                                        <p style=""color: #999999; font-size: 13px; margin: 0; line-height: 1.5;"">
+                                            Sobald die Voraussetzungen erfüllt sind, können Sie sich erneut registrieren
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <!-- Support Box -->
+                            <table width=""100%"" cellpadding=""0"" cellspacing=""0"" style=""background-color: #f8f9fa; border-radius: 6px; margin: 0 0 30px 0;"">
+                                <tr>
+                                    <td style=""padding: 25px; text-align: center;"">
+                                        <p style=""color: #666666; font-size: 14px; line-height: 1.6; margin: 0 0 15px 0;"">
+                                            <strong>Haben Sie Fragen zu dieser Entscheidung?</strong>
+                                        </p>
+                                        <p style=""color: #999999; font-size: 13px; line-height: 1.6; margin: 0;"">
+                                            Kontaktieren Sie uns gerne unter:<br>
+                                            <a href=""mailto:support@jobstream.com"" style=""color: #667eea; font-weight: bold; text-decoration: none;"">support@jobstream.com</a>
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+
+                            <p style=""color: #666666; font-size: 14px; line-height: 1.6; margin: 0;"">
+                                Wir danken Ihnen für Ihr Verständnis und hoffen, in Zukunft mit Ihnen zusammenarbeiten zu können.
+                            </p>
+
+                            <p style=""color: #666666; font-size: 15px; line-height: 1.6; margin: 20px 0 0 0;"">
+                                Mit freundlichen Grüßen<br>
+                                <strong>Das JobStream Team</strong>
+                            </p>
+                        </td>
+                    </tr>
+
+                    <!-- Footer -->
+                    <tr>
+                        <td style=""background-color: #f8f9fa; padding: 30px; text-align: center; border-top: 1px solid #eeeeee;"">
+                            <p style=""color: #999999; font-size: 13px; line-height: 1.6; margin: 0 0 10px 0;"">
+                                <strong>JobStream - Die Plattform für qualifizierte Freelancer-Vermittlung</strong>
+                            </p>
+                            <p style=""color: #cccccc; font-size: 12px; margin: 0 0 10px 0;"">
+                                www.jobstream.com | support@jobstream.com
+                            </p>
+                            <p style=""color: #cccccc; font-size: 12px; margin: 0;"">
+                                © {DateTime.UtcNow.Year} JobStream. Alle Rechte vorbehalten.
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>";
+
+        _logger.LogInformation("Sending REJECTION email to {To} for {CompanyName}. Reason: {Reason}",
+            to, companyName, reason);
+
+        await SendEmailAsync(to, subject, htmlBody, isHtml: true);
+    }
 }
