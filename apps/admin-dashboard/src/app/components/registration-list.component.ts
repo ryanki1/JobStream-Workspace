@@ -11,7 +11,7 @@ import { AdminApiService } from '../services/admin-api.service';
   styleUrls: ['./registration-list.component.scss']
 })
 export class RegistrationListComponent implements OnInit {
-  public registrationSelected = output<string>();
+  public registrationSelected = output<string | null>();
 
   private adminApi = inject(AdminApiService);
 

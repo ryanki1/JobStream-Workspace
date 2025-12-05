@@ -1,19 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, signal } from '@angular/core';
 import { Router, RouterModule, NavigationEnd } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { RegistrationListComponent } from './components/registration-list.component';
 import { CompanyDetailComponent } from './components/company-detail.component';
+import { AdminStatisticsComponent } from "./components/admin-statistics.component";
 
 @Component({
-  imports: [CommonModule, RouterModule, RegistrationListComponent, CompanyDetailComponent],
+  imports: [CommonModule, RouterModule, RegistrationListComponent, CompanyDetailComponent, AdminStatisticsComponent],
+  standalone: true,
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })
 export class App implements OnInit {
-  selectedRegistrationId: string | null = null;
+  selectedRegistrationId = signal<string | null>(null);
   showAdminLayout = true;
+  currentUrl = '';
 
   constructor(private router: Router) {}
 
@@ -32,15 +35,16 @@ export class App implements OnInit {
   private checkRoute(url: string) {
     // Hide admin layout for public registration routes
     this.showAdminLayout = url.startsWith('/admin');
+    this.currentUrl = url;
   }
 
-  onRegistrationSelected(id: string) {
-    this.selectedRegistrationId = id;
+  onRegistrationSelected(id: string | null) {
+    this.selectedRegistrationId.set(id);
   }
 
   onActionCompleted() {
     // Reload the list
-    this.selectedRegistrationId = null;
+    this.selectedRegistrationId.set(null);
     // The list component will reload automatically
   }
 }

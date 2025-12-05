@@ -1,0 +1,96 @@
+.stats {
+    text-align: center;
+    .loading-text-container {
+        position: relative; 
+        display: inline-block; 
+        padding-right: 1em;
+    }
+
+    .emoticon {
+        font-size: 30px; 
+        display: block; 
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%); 
+        animation: slide-text-width 3s infinite linear;
+    }
+
+    @keyframes slide-text-width {
+        0% {
+            left: -5%; 
+            filter: brightness(2)
+        }
+        50% {
+            left: 70%; 
+            filter: brightness(1.5)
+        }
+        100% {
+            left: -5%; 
+            filter: brightness(1.25)
+        }
+    }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 1rem;
+        padding: 1rem;
+        .card {
+            .icon {
+                font-size: 2rem;
+            }
+            .value {
+                margin: 0.5rem 0;
+                font-weight: bold;
+            }
+            .label {
+                text-align: center;
+            }
+            display: flex;
+            border: 1px solid;
+            border-width: .25rem;
+            max-width: 6rem;
+            padding: 1rem;
+            margin: 1rem;
+            flex-direction: column;
+            align-items: center;
+
+            &.overall {
+                border-color: #2196F3;
+                .value { color: #2196F3; }
+            }
+
+            &.email-verified {
+                border-color: #9C27B0;
+                .value { color: #9C27B0; }
+            }
+
+            &.pending {
+                border-color: #FF9800;
+                .value { color: #FF9800; }
+            }
+
+            &.approved {
+                border-color: #4CAF50;
+                .value { color: #4CAF50; }
+            }
+
+            &.rejected {
+                border-color: #F44336;
+                .value { color: #F44336; }
+            }
+
+            &.review-time {
+                border-color: #607D8B;
+                .value { color: #607D8B; }
+            }
+        }
+    }
+    .no-statistics, .loading {
+        font-size: 1.25rem;
+        padding: 2rem;
+    }
+
+    .loading {
+        color: #607D8B;
+    }
+}

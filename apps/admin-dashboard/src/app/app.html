@@ -1,17 +1,25 @@
-<router-outlet></router-outlet>
-
 @if (showAdminLayout) {
-<div class="admin-container">
-  <div class="left-panel">
-    <app-registration-list
-      (registrationSelected)="onRegistrationSelected($event)"
-    ></app-registration-list>
+  <div class="admin-container">
+    <div class="left-panel">
+      @switch (currentUrl) {
+        @case ('/admin-list') {
+          <app-registration-list
+            (registrationSelected)="onRegistrationSelected($event)">
+          </app-registration-list>
+        }
+        @default {
+          <app-admin-statistics>
+          </app-admin-statistics>
+        }
+      }
+    </div>
+    <div class="right-panel">
+      <app-company-detail
+        [registrationId]="selectedRegistrationId()"
+        (actionCompleted)="onActionCompleted()"
+      ></app-company-detail>
+    </div>
   </div>
-  <div class="right-panel">
-    <app-company-detail
-      [registrationId]="selectedRegistrationId"
-      (actionCompleted)="onActionCompleted()"
-    ></app-company-detail>
-  </div>
-</div>
+} @else {
+  <router-outlet></router-outlet>
 }

@@ -4,6 +4,7 @@ import { RegistrationListComponent } from './components/registration-list.compon
 import { StartRegistrationComponent } from './components/start-registration.component';
 import { authGuard } from './guards/auth.guard';
 import { LoginComponent } from '@jobstream-workspace/shared-ui';
+import { AdminStatisticsComponent } from './components/admin-statistics.component';
 
 export const appRoutes: Route[] = [
    {
@@ -11,7 +12,13 @@ export const appRoutes: Route[] = [
     component: LoginComponent,
     title: 'Login - JobStream',
   },
-    {
+  {
+    path: 'admin-statistics',
+    component: AdminStatisticsComponent,
+    canActivate: [authGuard],
+    title: 'Admin - JobStream - Statistics'
+  },
+  {
     path: 'admin-list',
     component: RegistrationListComponent,
     canActivate: [authGuard],
@@ -19,7 +26,7 @@ export const appRoutes: Route[] = [
   },
   {
     path: 'admin',
-    redirectTo: '/admin-list',
+    redirectTo: '/admin-statistics',
     pathMatch: 'full'
   },
   {

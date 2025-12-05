@@ -1,0 +1,45 @@
+<div class="stats">
+    <h1>Company Registration Statistics</h1>
+    @if(statistics() === undefined) {
+        <span class="loading-text-container">
+            Loading Statistics ...
+            <span class="emoticon">✨</span>
+        </span>
+    } @else if(statistics() === null) {
+        <p class="no-statistics">‼️ There are no statistics available at present.</p>
+    } @else {
+        <div class="stats-grid">
+            <div class="card overall">
+                <div class="icon">📋</div>
+                <div class="value">{{ statistics()?.totalRegistrations | number:'1.0-0' }}</div>
+                <div class="label">Total Registrations</div>
+            </div>
+            <div class="card email-verified">
+                <div class="icon">✉️</div>
+                <div class="value">{{ statistics()?.emailVerifiedCount | number:'1.0-0' }}</div>
+                <div class="label">Verified E-Mails</div>
+            </div>
+            <div class="card pending">
+                <div class="icon">🤖</div>
+                <div class="value">{{ statistics()?.pendingCount | number:'1.0-0' }}</div>
+                <div class="label">Number Pending</div>
+            </div>
+            <div class="card approved">
+                <div class="icon">✅</div>
+                <div class="value">{{ statistics()?.approvedCount | number:'1.0-0' }}</div>
+                <div class="label">Number Approved</div>
+            </div>
+            <div class="card rejected">
+                <div class="icon">❌</div>
+                <div class="value">{{ statistics()?.rejectedCount | number:'1.0-0' }}</div>
+                <div class="label">Number Rejected</div>
+            </div>
+            <div class="card review-time">
+                <div class="icon">⌛️</div>
+                <div class="value">{{ getAverageReviewDays() }}</div>
+                <div class="label">Avg Review Duration</div>
+            </div>
+        </div>
+    }
+</div>
+
