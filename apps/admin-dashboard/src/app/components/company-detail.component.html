@@ -199,11 +199,11 @@
   <!-- Action Buttons -->
   @if (!loading && registration.status === RegistrationStatus.PendingReview) {
   <div class="action-buttons">
-    <button class="btn-accept" (click)="approve()" [disabled]="approving">
-      {{ approving ? 'Approving...' : 'Accept' }}
+    <button class="btn-accept" (click)="openApproveModal()" [disabled]="approving">
+      Accept
     </button>
-    <button class="btn-block" (click)="reject()" [disabled]="rejecting">
-      {{ rejecting ? 'Blocking...' : 'Block' }}
+    <button class="btn-block" (click)="openRejectModal()" [disabled]="rejecting">
+      Block
     </button>
   </div>
   }
@@ -222,5 +222,75 @@
 } @if (!registration && !loading) {
 <div class="no-selection">
   <p>Select a registration to view details</p>
+</div>
+}
+
+<!-- Approve Modal -->
+@if (showApproveModal) {
+<div class="modal-overlay" (click)="closeApproveModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Approve Registration</h2>
+      <button class="modal-close" (click)="closeApproveModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to approve this registration for <strong>{{ registration?.legalName }}</strong>?</p>
+      <div class="form-group">
+        <label for="approval-notes">Approval Notes (Optional)</label>
+        <textarea
+          id="approval-notes"
+          [(ngModel)]="approvalNotes"
+          rows="4"
+          placeholder="Add any notes or comments about this approval..."
+          class="form-control"
+        ></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeApproveModal()" [disabled]="approving">
+        Cancel
+      </button>
+      <button class="btn-primary" (click)="approve()" [disabled]="approving">
+        {{ approving ? 'Approving...' : 'Approve' }}
+      </button>
+    </div>
+  </div>
+</div>
+}
+
+<!-- Reject Modal -->
+@if (showRejectModal) {
+<div class="modal-overlay" (click)="closeRejectModal()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <div class="modal-header">
+      <h2>Reject Registration</h2>
+      <button class="modal-close" (click)="closeRejectModal()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <p>Are you sure you want to reject this registration for <strong>{{ registration?.legalName }}</strong>?</p>
+      <div class="form-group">
+        <label for="reject-reason">Rejection Reason (Required) *</label>
+        <textarea
+          id="reject-reason"
+          [(ngModel)]="rejectReason"
+          rows="4"
+          placeholder="Please provide a detailed reason for rejection (minimum 10 characters)..."
+          class="form-control"
+          [class.invalid]="error && rejectReason.length < 10"
+        ></textarea>
+        @if (error && rejectReason.length < 10) {
+        <small class="error-text">{{ error }}</small>
+        }
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" (click)="closeRejectModal()" [disabled]="rejecting">
+        Cancel
+      </button>
+      <button class="btn-danger" (click)="reject()" [disabled]="rejecting || rejectReason.length < 10">
+        {{ rejecting ? 'Rejecting...' : 'Reject' }}
+      </button>
+    </div>
+  </div>
 </div>
 }

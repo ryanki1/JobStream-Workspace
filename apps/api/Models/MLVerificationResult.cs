@@ -9,7 +9,8 @@ public enum RiskLevel
 {
     Low,
     Medium,
-    High
+    High,
+    Critical
 }
 
 public class MLVerificationResult

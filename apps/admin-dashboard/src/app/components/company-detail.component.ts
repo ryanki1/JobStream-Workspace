@@ -29,6 +29,11 @@ export class CompanyDetailComponent {
   verifying = false;
   approving = false;
   rejecting = false;
+
+  // Modal states
+  showApproveModal = false;
+  showRejectModal = false;
+  approvalNotes = '';
   rejectReason = '';
 
   constructor() {
@@ -68,27 +73,35 @@ export class CompanyDetailComponent {
       next: (result) => {
         this.mlVerifications = [result, ...this.mlVerifications];
         this.verifying = false;
-        alert('ML Verification completed! Risk Score: ' + result.overallRiskScore);
       },
       error: (err) => {
         console.error('Error during ML verification:', err);
         this.error = err.error?.message || 'ML verification failed';
         this.verifying = false;
       }
-    }); 
+    });
+  }
+
+  openApproveModal() {
+    this.showApproveModal = true;
+    this.approvalNotes = '';
+  }
+
+  closeApproveModal() {
+    this.showApproveModal = false;
+    this.approvalNotes = '';
   }
 
   approve() {
     if (!this.registrationId()) return;
 
-    const notes = prompt('Add approval notes (optional):');
     this.approving = true;
     this.error = null;
 
-    this.adminApi.approveRegistration(this.registrationId()!, { notes: notes || undefined }).subscribe({
+    this.adminApi.approveRegistration(this.registrationId()!, { notes: this.approvalNotes || undefined }).subscribe({
       next: () => {
         this.approving = false;
-        alert('Registration approved successfully!');
+        this.closeApproveModal();
         this.actionCompleted.emit();
       },
       error: (err) => {
@@ -99,22 +112,31 @@ export class CompanyDetailComponent {
     });
   }
 
+  openRejectModal() {
+    this.showRejectModal = true;
+    this.rejectReason = '';
+  }
+
+  closeRejectModal() {
+    this.showRejectModal = false;
+    this.rejectReason = '';
+  }
+
   reject() {
     if (!this.registrationId()) return;
 
-    const reason = prompt('Rejection reason (required):');
-    if (!reason || reason.trim().length < 10) {
-      alert('Rejection reason must be at least 10 characters');
+    if (!this.rejectReason || this.rejectReason.trim().length < 10) {
+      this.error = 'Rejection reason must be at least 10 characters';
       return;
     }
 
     this.rejecting = true;
     this.error = null;
 
-    this.adminApi.rejectRegistration(this.registrationId()!, { reason }).subscribe({
+    this.adminApi.rejectRegistration(this.registrationId()!, { reason: this.rejectReason }).subscribe({
       next: () => {
         this.rejecting = false;
-        alert('Registration rejected successfully!');
+        this.closeRejectModal();
         this.actionCompleted.emit();
       },
       error: (err) => {
@@ -142,6 +164,8 @@ export class CompanyDetailComponent {
         return 'risk-medium';
       case 'High':
         return 'risk-high';
+      case 'Critical':
+        return 'risk-critical';
       default:
         return '';
     }
