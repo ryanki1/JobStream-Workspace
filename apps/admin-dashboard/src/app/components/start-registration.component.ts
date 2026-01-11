@@ -70,9 +70,7 @@ export class StartRegistrationComponent {
 
   onSubmit() {
     if (this.registrationForm.invalid) {
-      Object.keys(this.registrationForm.controls).forEach(key => {
-        this.registrationForm.get(key)?.markAsTouched();
-      });
+      this.registrationForm.markAllAsTouched();
       return;
     }
 

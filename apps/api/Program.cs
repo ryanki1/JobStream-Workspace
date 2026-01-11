@@ -4,6 +4,7 @@ using JobStream.Api.Services;
 using JobStream.Api.Middleware;
 using JobStream.Api.Configuration;
 using Npgsql;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -145,6 +146,54 @@ builder.Services.AddAuthentication(options =>
         IssuerSigningKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(
             System.Text.Encoding.UTF8.GetBytes(jwtSecret))
     };
+})
+.AddCookie(options =>
+{
+    // Cookie-Konfiguration für Sicherheit
+    options.Cookie.Name = "OAuth20BFF.Auth";
+    options.Cookie.HttpOnly = true;        // JavaScript-Zugriff verhindern (XSS-Schutz)
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None; // Development: None, Production: Always
+    options.Cookie.SameSite = SameSiteMode.Lax;  // CSRF-Schutz, erlaubt Top-Level Navigation
+    options.ExpireTimeSpan = TimeSpan.FromHours(24);
+    options.SlidingExpiration = true;
+
+    // API-freundliche Responses (kein Redirect)
+    options.Events.OnRedirectToLogin = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status401Unauthorized;
+        return Task.CompletedTask;
+    };
+    options.Events.OnRedirectToAccessDenied = context =>
+    {
+        context.Response.StatusCode = StatusCodes.Status403Forbidden;
+        return Task.CompletedTask;
+    };
+})
+.AddGoogle(options =>
+{
+    options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    // Google OAuth Credentials (aus appsettings.json oder User Secrets)
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]
+        ?? throw new InvalidOperationException("Google ClientId not configured");
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]
+        ?? throw new InvalidOperationException("Google ClientSecret not configured");
+
+    // Callback-Pfad explizit setzen (Standard ist /signin-google)
+    options.CallbackPath = "/signin-google";
+
+    // Scopes: Welche Daten vom Google-User benötigt werden
+    options.Scope.Add("profile");
+    options.Scope.Add("email");
+
+    // Claims speichern für späteren Zugriff
+    options.SaveTokens = true;
+
+    // Correlation Cookie Konfiguration (wichtig für OAuth Flow!)
+    // Dieser Cookie wird verwendet, um den OAuth-State zwischen Challenge und Callback zu validieren
+    options.CorrelationCookie.SameSite = SameSiteMode.Lax;
+    options.CorrelationCookie.SecurePolicy = CookieSecurePolicy.None; // Development: None
+    options.CorrelationCookie.HttpOnly = true;
+    options.CorrelationCookie.IsEssential = true; // Cookie ist essentiell für OAuth
 });
 
 // Configure Authorization
@@ -158,9 +207,12 @@ builder.Services.AddCors(options =>
         policy.WithOrigins("http://localhost:4200", "http://localhost:4201")
               .AllowAnyHeader()
               .AllowAnyMethod()
-              .AllowCredentials();
+              .AllowCredentials()
+              .WithExposedHeaders("Set-Cookie"); // Cookie-Header explizit freigeben
     });
 });
+
+
 
 // Add Controllers with JSON options
 builder.Services.AddControllers()

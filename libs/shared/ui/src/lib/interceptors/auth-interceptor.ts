@@ -17,16 +17,17 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
 
+    const isApiRequest = request.url.includes('localhost:5000/api') ||
+                    request.url.includes('localhost:5001/api') ||
+                    request.url.includes('localhost:7001/api');
     const token = localStorage.getItem('token');
-    let authyRequest = request.clone();
-
-    if (token) {
-      authyRequest = request.clone({
-        setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-    }
+    const authorization = token ? `Bearer ${token}` : '';
+    const authyRequest = request.clone({
+      withCredentials: isApiRequest,
+      setHeaders: {
+        Authorization: authorization
+      }
+    });
 
     return next.handle(authyRequest).pipe(
 

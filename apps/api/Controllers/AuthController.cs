@@ -5,7 +5,6 @@ using JobStream.Api.Data;
 using JobStream.Api.Models;
 using JobStream.Api.Services;
 using JobStream.Api.Helpers;
-using BCrypt.Net;
 
 namespace JobStream.Api.Controllers;
 

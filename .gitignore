@@ -55,3 +55,6 @@ Thumbs.db
 .angular
 
 test-output
+
+# Secrets und lokale Konfigurationen
+appsettings.Development.json

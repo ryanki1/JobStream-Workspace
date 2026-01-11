@@ -5,12 +5,18 @@ import { StartRegistrationComponent } from './components/start-registration.comp
 import { authGuard } from './guards/auth.guard';
 import { LoginComponent } from '@jobstream-workspace/shared-ui';
 import { AdminStatisticsComponent } from './components/admin-statistics.component';
+import { LoginCandidateComponent } from './components/login-candidate.component';
 
 export const appRoutes: Route[] = [
    {
-    path: 'login',
+    path: 'admin-login',
     component: LoginComponent,
-    title: 'Login - JobStream',
+    title: 'Admin Login - JobStream',
+  },
+  {
+    path: 'candidate-login',
+    component: LoginCandidateComponent,
+    title: 'Company Login - JobStream',
   },
   {
     path: 'admin-statistics',
