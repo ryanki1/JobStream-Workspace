@@ -1,0 +1,380 @@
+<!-- Job List - Company's Job Postings Overview -->
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-amber-50">
+
+  <!-- Sidebar Navigation (Zen Style) -->
+  <div class="flex">
+    <!-- Left Sidebar - Pink accent -->
+    <aside class="w-1/5 bg-pink-300 min-h-screen flex flex-col items-center justify-start pt-16">
+      <div class="my-20 writing-mode-vertical transform -rotate-90 text-white text-6xl tracking-widest font-light">
+        JobStream
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-8 md:p-12 max-w-full bg-teal-400">
+
+      <!-- Page Header -->
+      <header class="mb-8">
+        <div class="flex items-center justify-between mb-6">
+          <div>
+            <h1 class="text-3xl font-bold text-white mb-2">Meine Job-Postings</h1>
+            <p class="text-white/90">Verwalten Sie Ihre Sprint-basierten Projekte</p>
+          </div>
+          <button hlmBtn class="p-4 bg-orange-500 hover:bg-orange-600 flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+            Neues Job-Posting
+          </button>
+        </div>
+
+        <!-- Status Filter Tabs -->
+        <div class="flex gap-2 flex-wrap">
+          <button hlmBtn variant="outline" class="p-4 bg-white text-slate-800 border-orange-500 border-2">
+            Alle <span hlmBadge class="ml-2 bg-orange-100 text-orange-700">12</span>
+          </button>
+          <button hlmBtn variant="ghost" class="p-4 text-white hover:bg-white/20">
+            Entwürfe <span hlmBadge class="ml-2 bg-white/20 text-white">3</span>
+          </button>
+          <button hlmBtn variant="ghost" class="p-4 text-white hover:bg-white/20">
+            Aktiv <span hlmBadge class="ml-2 bg-green-100 text-green-700">6</span>
+          </button>
+          <button hlmBtn variant="ghost" class="p-4 text-white hover:bg-white/20">
+            Pausiert <span hlmBadge class="ml-2 bg-yellow-100 text-yellow-700">2</span>
+          </button>
+          <button hlmBtn variant="ghost" class="p-4 text-white hover:bg-white/20">
+            Geschlossen <span hlmBadge class="ml-2 bg-slate-100 text-slate-700">1</span>
+          </button>
+        </div>
+      </header>
+
+      <!-- Job Postings Grid -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Job Card 1 - Draft -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow">
+          <div class="p-6">
+            <!-- Card Header -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span hlmBadge class="bg-slate-100 text-slate-700">Entwurf</span>
+                  <span class="text-xs text-slate-500">Erstellt: 14.01.2026</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">Senior Full-Stack Developer</h3>
+                <p class="text-sm text-slate-600 line-clamp-2">
+                  Entwicklung einer Microservices-Architektur mit .NET Core und Angular für E-Commerce-Plattform
+                </p>
+              </div>
+
+              <!-- Context Menu -->
+              <button hlmBtn variant="ghost" size="sm" class="text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Tech Stack Pills -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span hlmBadge class="bg-teal-100 text-teal-700">C#</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">.NET Core</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">Angular</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">PostgreSQL</span>
+            </div>
+
+            <!-- Sprint Info -->
+            <div class="grid grid-cols-2 gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Sprint-Dauer</p>
+                <p class="font-semibold text-slate-800">2 Wochen</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Projekt-Dauer</p>
+                <p class="font-semibold text-slate-800">90 Tage (6 Sprints)</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Gesamt-Payment</p>
+                <p class="font-semibold text-green-600">€50,000</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Milestones</p>
+                <p class="font-semibold text-slate-800">3</p>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="flex gap-2">
+              <button hlmBtn variant="outline" class="flex-1">
+                Bearbeiten
+              </button>
+              <button hlmBtn class="flex-1 bg-orange-500 hover:bg-orange-600">
+                Veröffentlichen
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job Card 2 - Active -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow">
+          <div class="p-6">
+            <!-- Card Header -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span hlmBadge class="bg-green-100 text-green-700">Aktiv</span>
+                  <span class="text-xs text-slate-500">Veröffentlicht: 10.01.2026</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">DevOps Engineer - Cloud Migration</h3>
+                <p class="text-sm text-slate-600 line-clamp-2">
+                  Migration bestehender On-Premise Infrastruktur zu Azure Cloud mit Kubernetes
+                </p>
+              </div>
+
+              <!-- Context Menu -->
+              <button hlmBtn variant="ghost" size="sm" class="text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Tech Stack Pills -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span hlmBadge class="bg-teal-100 text-teal-700">Azure</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">Kubernetes</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">Docker</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">Terraform</span>
+            </div>
+
+            <!-- Sprint Info -->
+            <div class="grid grid-cols-2 gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Sprint-Dauer</p>
+                <p class="font-semibold text-slate-800">3 Wochen</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Projekt-Dauer</p>
+                <p class="font-semibold text-slate-800">120 Tage (5 Sprints)</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Gesamt-Payment</p>
+                <p class="font-semibold text-green-600">€75,000</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Milestones</p>
+                <p class="font-semibold text-slate-800">4</p>
+              </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="flex items-center gap-4 mb-4 p-3 bg-blue-50 rounded-lg text-sm">
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-semibold text-blue-700">234</span>
+                <span class="text-blue-600">Views</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-semibold text-green-700">18</span>
+                <span class="text-green-600">Bewerbungen</span>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="flex gap-2">
+              <button hlmBtn variant="outline" class="flex-1">
+                Details ansehen
+              </button>
+              <button hlmBtn variant="outline" class="flex-1">
+                Pausieren
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job Card 3 - Active with Applications -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow">
+          <div class="p-6">
+            <!-- Card Header -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span hlmBadge class="bg-green-100 text-green-700">Aktiv</span>
+                  <span class="text-xs text-slate-500">Veröffentlicht: 08.01.2026</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">React Native Mobile Developer</h3>
+                <p class="text-sm text-slate-600 line-clamp-2">
+                  Cross-platform Mobile App für Fintech Startup mit Push-Notifications und Offline-Support
+                </p>
+              </div>
+
+              <!-- Context Menu -->
+              <button hlmBtn variant="ghost" size="sm" class="text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Tech Stack Pills -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span hlmBadge class="bg-teal-100 text-teal-700">React Native</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">TypeScript</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">Firebase</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">Redux</span>
+            </div>
+
+            <!-- Sprint Info -->
+            <div class="grid grid-cols-2 gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Sprint-Dauer</p>
+                <p class="font-semibold text-slate-800">1 Woche</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Projekt-Dauer</p>
+                <p class="font-semibold text-slate-800">60 Tage (8 Sprints)</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Gesamt-Payment</p>
+                <p class="font-semibold text-green-600">€40,000</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Milestones</p>
+                <p class="font-semibold text-slate-800">5</p>
+              </div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="flex items-center gap-4 mb-4 p-3 bg-blue-50 rounded-lg text-sm">
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 12a2 2 0 100-4 2 2 0 000 4z" />
+                  <path fill-rule="evenodd" d="M.458 10C1.732 5.943 5.522 3 10 3s8.268 2.943 9.542 7c-1.274 4.057-5.064 7-9.542 7S1.732 14.057.458 10zM14 10a4 4 0 11-8 0 4 4 0 018 0z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-semibold text-blue-700">567</span>
+                <span class="text-blue-600">Views</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                  <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-semibold text-green-700">42</span>
+                <span class="text-green-600">Bewerbungen</span>
+              </div>
+              <div class="flex items-center gap-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-orange-600" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                <span class="font-semibold text-orange-700">8</span>
+                <span class="text-orange-600">Shortlist</span>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="flex gap-2">
+              <button hlmBtn variant="outline" class="flex-1">
+                Details ansehen
+              </button>
+              <button hlmBtn class="flex-1 bg-orange-500 hover:bg-orange-600">
+                Bewerbungen (42)
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Job Card 4 - Paused -->
+        <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden hover:shadow-xl transition-shadow opacity-80">
+          <div class="p-6">
+            <!-- Card Header -->
+            <div class="flex items-start justify-between mb-4">
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-2">
+                  <span hlmBadge class="bg-yellow-100 text-yellow-700">Pausiert</span>
+                  <span class="text-xs text-slate-500">Pausiert seit: 12.01.2026</span>
+                </div>
+                <h3 class="text-xl font-bold text-slate-800 mb-1">Backend Python Developer</h3>
+                <p class="text-sm text-slate-600 line-clamp-2">
+                  FastAPI Microservices für ML-Pipeline mit PostgreSQL und Redis
+                </p>
+              </div>
+
+              <!-- Context Menu -->
+              <button hlmBtn variant="ghost" size="sm" class="text-slate-400">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                  <path d="M10 6a2 2 0 110-4 2 2 0 010 4zM10 12a2 2 0 110-4 2 2 0 010 4zM10 18a2 2 0 110-4 2 2 0 010 4z" />
+                </svg>
+              </button>
+            </div>
+
+            <!-- Tech Stack Pills -->
+            <div class="flex flex-wrap gap-2 mb-4">
+              <span hlmBadge class="bg-teal-100 text-teal-700">Python</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">FastAPI</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">PostgreSQL</span>
+              <span hlmBadge class="bg-teal-100 text-teal-700">Redis</span>
+            </div>
+
+            <!-- Sprint Info -->
+            <div class="grid grid-cols-2 gap-4 mb-4 p-3 bg-slate-50 rounded-lg">
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Sprint-Dauer</p>
+                <p class="font-semibold text-slate-800">2 Wochen</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Projekt-Dauer</p>
+                <p class="font-semibold text-slate-800">75 Tage (5 Sprints)</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Gesamt-Payment</p>
+                <p class="font-semibold text-green-600">€35,000</p>
+              </div>
+              <div>
+                <p class="text-xs text-slate-500 mb-1">Milestones</p>
+                <p class="font-semibold text-slate-800">3</p>
+              </div>
+            </div>
+
+            <!-- Card Actions -->
+            <div class="flex gap-2">
+              <button hlmBtn variant="outline" class="flex-1">
+                Details ansehen
+              </button>
+              <button hlmBtn class="flex-1 bg-green-500 hover:bg-green-600">
+                Reaktivieren
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Empty State (hidden when jobs exist) -->
+      <!-- <div class="hidden bg-white rounded-xl shadow-lg border-2 border-dashed border-slate-300 p-12 text-center">
+        <div class="max-w-md mx-auto">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 mx-auto text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <h3 class="text-xl font-bold text-slate-800 mb-2">Noch keine Job-Postings</h3>
+          <p class="text-slate-600 mb-6">
+            Erstellen Sie Ihr erstes Sprint-basiertes Job-Posting und finden Sie die perfekten Entwickler für Ihr Projekt.
+          </p>
+          <button hlmBtn class="bg-orange-500 hover:bg-orange-600">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+              <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+            </svg>
+            Erstes Job-Posting erstellen
+          </button>
+        </div>
+      </div> -->
+
+    </main>
+  </div>
+</div>
