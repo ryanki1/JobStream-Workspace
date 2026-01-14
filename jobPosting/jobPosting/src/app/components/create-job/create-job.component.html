@@ -1,0 +1,684 @@
+<!-- Create Job Posting Form - 5 Collapsible Sections -->
+<div class="min-h-screen bg-gradient-to-br from-slate-50 to-amber-50">
+
+  <!-- Sidebar Navigation (Zen Style) -->
+  <div class="flex">
+    <!-- Left Sidebar - Pink accent -->
+    <aside class="w-1/5 bg-pink-300 min-h-screen flex flex-col items-center justify-start pt-16">
+      <div class="my-20 writing-mode-vertical transform -rotate-90 text-white text-6xl tracking-widest font-light">
+        JobStream
+      </div>
+    </aside>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 p-8 md:p-12 max-w-full bg-teal-400">
+
+      <!-- Page Header -->
+      <header class="mb-8">
+        <button hlmBtn variant="ghost" class="mb-4 -ml-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd" />
+          </svg>
+          Zurück
+        </button>
+
+        <h1 class="text-3xl md:text-4xl font-bold text-slate-800 mb-2">
+          Neue Stellenanzeige
+        </h1>
+        <p class="text-slate-600">
+          Sprint-basiertes Projekt erstellen
+        </p>
+      </header>
+
+      <!-- Form Container -->
+      <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden">
+
+        <!-- Section 1: Grundinformationen -->
+        <div hlmAccordion class="border-b border-slate-200">
+          <div hlmAccordionItem>
+            <h3>
+              <button hlmAccordionTrigger class="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-orange-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" />
+                      <path fill-rule="evenodd" d="M4 5a2 2 0 012-2 3 3 0 003 3h2a3 3 0 003-3 2 2 0 012 2v11a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="text-left">
+                    <h3 class="text-lg font-semibold text-slate-800">Grundinformationen</h3>
+                    <p class="text-sm text-slate-500">Titel und Beschreibung des Projekts</p>
+                  </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transform transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </h3>
+
+            <div hlmAccordionContent class="px-6 py-6 bg-slate-50">
+              <!-- Job Title -->
+              <div class="mb-6">
+                <label hlmLabel class="mb-2 block">
+                  Stellentitel <span class="text-red-500">*</span>
+                </label>
+                <input
+                  hlmInput
+                  type="text"
+                  placeholder="z.B. Senior Full-Stack Developer"
+                  class="p-4 w-full"
+                  maxlength="200"
+                />
+                <p class="text-xs text-slate-500 mt-1">Max. 200 Zeichen</p>
+              </div>
+
+              <!-- Job Description -->
+              <div class="mb-6">
+                <label hlmLabel class="mb-2 block">
+                  Projektbeschreibung <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                  hlmTextarea
+                  rows="8"
+                  placeholder="Beschreiben Sie das Sprint-basierte Projekt, die Ziele und Erwartungen..."
+                  class="w-full resize-none p-4"
+                  maxlength="5000"
+                ></textarea>
+                <p class="text-xs text-slate-500 mt-1">50-5000 Zeichen</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 2: Technologie & Skills -->
+        <div hlmAccordion class="border-b border-slate-200">
+          <div hlmAccordionItem>
+            <h3>
+              <button hlmAccordionTrigger class="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-teal-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-teal-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M12.316 3.051a1 1 0 01.633 1.265l-4 12a1 1 0 11-1.898-.632l4-12a1 1 0 011.265-.633zM5.707 6.293a1 1 0 010 1.414L3.414 10l2.293 2.293a1 1 0 11-1.414 1.414l-3-3a1 1 0 010-1.414l3-3a1 1 0 011.414 0zm8.586 0a1 1 0 011.414 0l3 3a1 1 0 010 1.414l-3 3a1 1 0 11-1.414-1.414L16.586 10l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="text-left">
+                    <h3 class="text-lg font-semibold text-slate-800">Technologie & Skills</h3>
+                    <p class="text-sm text-slate-500">Tech Stack und erforderliche Fähigkeiten</p>
+                  </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transform transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </h3>
+
+            <div hlmAccordionContent class="px-6 py-6 bg-slate-50">
+              <!-- Technology Stack -->
+              <div class="mb-6">
+                <label hlmLabel class="mb-2 block">
+                  Technologie Stack <span class="text-red-500">*</span>
+                </label>
+                <textarea
+                  hlmTextarea
+                  rows="3"
+                  placeholder="z.B. .NET Core, PostgreSQL, Angular, Docker, Kubernetes"
+                  class="w-full resize-none p-4"
+                  maxlength="500"
+                ></textarea>
+                <p class="text-xs text-slate-500 mt-1">Max. 500 Zeichen</p>
+              </div>
+
+              <!-- Required Skills with Tags -->
+              <div class="mb-6">
+                <label hlmLabel class="mb-2 block">
+                  Erforderliche Skills <span class="text-red-500">*</span>
+                </label>
+
+                <!-- Skills Input Container -->
+                <div class="relative">
+                  <div class="flex flex-wrap gap-2 p-3 border border-slate-300 rounded-lg bg-white min-h-[100px] focus-within:ring-2 focus-within:ring-orange-500 focus-within:border-orange-500">
+
+                    <!-- Selected Skills as Badges -->
+                    <span hlmBadge class="bg-teal-600 text-white px-3 py-1 flex items-center gap-2">
+                      C#
+                      <button type="button" class="hover:bg-teal-700 p-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                      </button>
+                    </span>
+
+                    <span hlmBadge class="bg-teal-600 text-white px-3 py-1 flex items-center gap-2">
+                      .NET Core
+                      <button type="button" class="hover:bg-teal-700 p-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                      </button>
+                    </span>
+
+                    <span hlmBadge class="bg-teal-600 text-white px-3 py-1 flex items-center gap-2">
+                      PostgreSQL
+                      <button type="button" class="hover:bg-teal-700 p-0.5">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3" viewBox="0 0 20 20" fill="currentColor">
+                          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                        </svg>
+                      </button>
+                    </span>
+
+                    <!-- Input Field -->
+                    <input
+                      type="text"
+                      placeholder="Skill hinzufügen (z.B. Angular)..."
+                      class="flex-1 min-w-[200px] outline-none text-sm"
+                    />
+                  </div>
+
+                  <!-- Autocomplete Dropdown (Command Component) -->
+                  <div class="hidden absolute z-10 w-full mt-2 bg-white border border-slate-300 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+                    <div class="p-2">
+                      <button type="button" class="w-full text-left px-3 py-2 hover:bg-slate-100 rounded text-sm">
+                        Angular
+                      </button>
+                      <button type="button" class="w-full text-left px-3 py-2 hover:bg-slate-100 rounded text-sm">
+                        React
+                      </button>
+                      <button type="button" class="w-full text-left px-3 py-2 hover:bg-slate-100 rounded text-sm">
+                        Vue.js
+                      </button>
+                      <button type="button" class="w-full text-left px-3 py-2 hover:bg-slate-100 rounded text-sm">
+                        Docker
+                      </button>
+                      <button type="button" class="w-full text-left px-3 py-2 hover:bg-slate-100 rounded text-sm">
+                        Kubernetes
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <p class="text-xs text-slate-500 mt-1">Mindestens 1 Skill erforderlich</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 3: Sprint & Timeline -->
+        <div hlmAccordion class="border-b border-slate-200">
+          <div hlmAccordionItem>
+            <h3>
+              <button hlmAccordionTrigger class="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="text-left">
+                    <h3 class="text-lg font-semibold text-slate-800">Sprint & Timeline</h3>
+                    <p class="text-sm text-slate-500">Sprint-Dauer und Projekt-Timeline</p>
+                  </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transform transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </h3>
+
+            <div hlmAccordionContent class="px-6 py-6 bg-slate-50">
+              <!-- Sprint Duration Slider -->
+              <div class="mb-6">
+                <label hlmLabel class="mb-3 block">
+                  Sprint-Dauer (Wochen) <span class="text-red-500">*</span>
+                </label>
+
+                <div class="space-y-4">
+                  <!-- Slider -->
+                  <div class="px-2">
+                    <input
+                      type="range"
+                      min="1"
+                      max="52"
+                      value="2"
+                      class="w-full h-2 bg-slate-200 rounded-lg appearance-none cursor-pointer accent-orange-500"
+                    />
+                  </div>
+
+                  <!-- Value Display -->
+                  <div class="flex items-center justify-center">
+                    <div class="bg-orange-100 border border-orange-200 rounded-lg px-6 py-3">
+                      <span class="text-3xl font-bold text-orange-600">2</span>
+                      <span class="text-sm text-orange-700 ml-2">Wochen</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Project Duration -->
+              <div class="mb-6">
+                <label hlmLabel class="mb-2 block">
+                  Projekt-Dauer (Tage) <span class="text-red-500">*</span>
+                </label>
+                <input
+                  hlmInput
+                  type="number"
+                  min="1"
+                  max="3650"
+                  value="90"
+                  placeholder="z.B. 90"
+                  class="p-4 w-full"
+                />
+                <p class="text-xs text-slate-500 mt-1">1-3650 Tage</p>
+              </div>
+
+              <!-- Sprint Calculator Display -->
+              <div class="bg-gradient-to-br from-blue-50 to-indigo-50 border border-blue-200 rounded-lg p-6">
+                <h4 class="font-semibold text-slate-800 mb-4 flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-blue-600" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M6 2a2 2 0 00-2 2v12a2 2 0 002 2h8a2 2 0 002-2V4a2 2 0 00-2-2H6zm1 2a1 1 0 000 2h6a1 1 0 100-2H7zm6 7a1 1 0 011 1v3a1 1 0 11-2 0v-3a1 1 0 011-1zm-3 3a1 1 0 100 2h.01a1 1 0 100-2H10zm-4 1a1 1 0 011-1h.01a1 1 0 110 2H7a1 1 0 01-1-1zm1-4a1 1 0 100 2h.01a1 1 0 100-2H7zm2 1a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zm4-4a1 1 0 100 2h.01a1 1 0 100-2H13zM9 9a1 1 0 011-1h.01a1 1 0 110 2H10a1 1 0 01-1-1zM7 8a1 1 0 000 2h.01a1 1 0 000-2H7z" clip-rule="evenodd" />
+                  </svg>
+                  Projekt-Kalkulation
+                </h4>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  <div class="bg-white rounded-lg p-4 border border-blue-100">
+                    <p class="text-xs text-slate-500 mb-1">Anzahl Sprints</p>
+                    <p class="text-2xl font-bold text-blue-600">~6</p>
+                  </div>
+
+                  <div class="bg-white rounded-lg p-4 border border-blue-100">
+                    <p class="text-xs text-slate-500 mb-1">Arbeitswochen</p>
+                    <p class="text-2xl font-bold text-blue-600">~13</p>
+                  </div>
+
+                  <div class="bg-white rounded-lg p-4 border border-blue-100">
+                    <p class="text-xs text-slate-500 mb-1">Voraussichtliches Ende</p>
+                    <p class="text-lg font-semibold text-blue-600">13. Apr 2026</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 4: Payment Structure -->
+        <div hlmAccordion class="border-b border-slate-200">
+          <div hlmAccordionItem>
+            <h3>
+              <button hlmAccordionTrigger class="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path d="M8.433 7.418c.155-.103.346-.196.567-.267v1.698a2.305 2.305 0 01-.567-.267C8.07 8.34 8 8.114 8 8c0-.114.07-.34.433-.582zM11 12.849v-1.698c.22.071.412.164.567.267.364.243.433.468.433.582 0 .114-.07.34-.433.582a2.305 2.305 0 01-.567.267z" />
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a1 1 0 10-2 0v.092a4.535 4.535 0 00-1.676.662C6.602 6.234 6 7.009 6 8c0 .99.602 1.765 1.324 2.246.48.32 1.054.545 1.676.662v1.941c-.391-.127-.68-.317-.843-.504a1 1 0 10-1.51 1.31c.562.649 1.413 1.076 2.353 1.253V15a1 1 0 102 0v-.092a4.535 4.535 0 001.676-.662C13.398 13.766 14 12.991 14 12c0-.99-.602-1.765-1.324-2.246A4.535 4.535 0 0011 9.092V7.151c.391.127.68.317.843.504a1 1 0 101.511-1.31c-.563-.649-1.413-1.076-2.354-1.253V5z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="text-left">
+                    <h3 class="text-lg font-semibold text-slate-800">Payment Structure</h3>
+                    <p class="text-sm text-slate-500">Milestones und Zahlungsstruktur</p>
+                  </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transform transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </h3>
+
+            <div hlmAccordionContent class="px-6 py-6 bg-slate-50">
+              <!-- Milestones List -->
+              <div class="space-y-4 mb-6">
+
+                <!-- Milestone 1 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-slate-800 flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs flex items-center justify-center">1</span>
+                      Milestone 1
+                    </h4>
+                    <button hlmBtn variant="ghost" size="sm" class="text-red-500 hover:text-red-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label hlmLabel class="mb-2 block text-xs">Beschreibung</label>
+                      <input hlmInput type="text" value="Upfront Payment" class="p-4 w-full" />
+                    </div>
+
+                    <div>
+                      <label hlmLabel class="mb-2 block text-xs">Betrag (EUR)</label>
+                      <input hlmInput type="number" value="15000" min="0" step="100" class="p-4 w-full" />
+                    </div>
+                  </div>
+
+                  <div class="mt-3 bg-orange-50 border border-orange-200 rounded px-3 py-2">
+                    <span class="text-sm font-semibold text-orange-700">30%</span>
+                    <span class="text-xs text-orange-600 ml-2">vom Gesamtbetrag</span>
+                  </div>
+                </div>
+
+                <!-- Milestone 2 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-slate-800 flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs flex items-center justify-center">2</span>
+                      Milestone 2
+                    </h4>
+                    <button hlmBtn variant="ghost" size="sm" class="text-red-500 hover:text-red-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label hlmLabel class="mb-2 block text-xs">Beschreibung</label>
+                      <input hlmInput type="text" value="Sprint 1-3 Completion" class="p-4 w-full" />
+                    </div>
+
+                    <div>
+                      <label hlmLabel class="mb-2 block text-xs">Betrag (EUR)</label>
+                      <input hlmInput type="number" value="20000" min="0" step="100" class="p-4 w-full" />
+                    </div>
+                  </div>
+
+                  <div class="mt-3 bg-orange-50 border border-orange-200 rounded px-3 py-2">
+                    <span class="text-sm font-semibold text-orange-700">40%</span>
+                    <span class="text-xs text-orange-600 ml-2">vom Gesamtbetrag</span>
+                  </div>
+                </div>
+
+                <!-- Milestone 3 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4">
+                  <div class="flex items-center justify-between mb-3">
+                    <h4 class="font-semibold text-slate-800 flex items-center gap-2">
+                      <span class="w-6 h-6 rounded-full bg-orange-500 text-white text-xs flex items-center justify-center">3</span>
+                      Milestone 3
+                    </h4>
+                    <button hlmBtn variant="ghost" size="sm" class="text-red-500 hover:text-red-700">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z" clip-rule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                      <label hlmLabel class="mb-2 block text-xs">Beschreibung</label>
+                      <input hlmInput type="text" value="Final Delivery" class="p-4 w-full" />
+                    </div>
+
+                    <div>
+                      <label hlmLabel class="mb-2 block text-xs">Betrag (EUR)</label>
+                      <input hlmInput type="number" value="15000" min="0" step="100" class="p-4 w-full" />
+                    </div>
+                  </div>
+
+                  <div class="mt-3 bg-orange-50 border border-orange-200 rounded px-3 py-2">
+                    <span class="text-sm font-semibold text-orange-700">30%</span>
+                    <span class="text-xs text-orange-600 ml-2">vom Gesamtbetrag</span>
+                  </div>
+                </div>
+
+              </div>
+
+              <!-- Add Milestone Button -->
+              <button hlmBtn variant="outline" class="flex w-full mb-6">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                Milestone hinzufügen
+              </button>
+
+              <!-- Total Summary -->
+              <div class="bg-gradient-to-r from-green-50 to-emerald-50 border-2 border-green-200 rounded-lg p-6">
+                <div class="flex items-center justify-between mb-2">
+                  <span class="text-lg font-semibold text-slate-800">Gesamtbetrag:</span>
+                  <span class="text-3xl font-bold text-green-600">€50,000</span>
+                </div>
+
+                <div hlmSeparator class="my-3"></div>
+
+                <div class="flex items-center justify-between">
+                  <span class="text-sm text-slate-600">Prozentuale Verteilung:</span>
+                  <div class="flex items-center gap-2">
+                    <span class="text-2xl font-bold text-green-600">100%</span>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section 5: Acceptance Criteria -->
+        <div hlmAccordion>
+          <div hlmAccordionItem>
+            <h3>
+              <button hlmAccordionTrigger class="w-full px-6 py-4 flex items-center justify-between hover:bg-slate-50 transition-colors">
+                <div class="flex items-center gap-3">
+                  <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-purple-600" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                    </svg>
+                  </div>
+                  <div class="text-left">
+                    <h3 class="text-lg font-semibold text-slate-800">Acceptance Criteria</h3>
+                    <p class="text-sm text-slate-500">Abnahmekriterien für das Projekt</p>
+                  </div>
+                </div>
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-400 transform transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+              </button>
+            </h3>
+
+            <div hlmAccordionContent class="px-6 py-6 bg-slate-50">
+
+              <!-- Template Button -->
+              <div class="mb-4">
+                <button hlmBtn variant="outline" size="sm">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9 2a2 2 0 00-2 2v8a2 2 0 002 2h6a2 2 0 002-2V6.414A2 2 0 0016.414 5L14 2.586A2 2 0 0012.586 2H9z" />
+                    <path d="M3 8a2 2 0 012-2v10h8a2 2 0 01-2 2H5a2 2 0 01-2-2V8z" />
+                  </svg>
+                  Standard Template laden
+                </button>
+              </div>
+
+              <!-- Criteria List -->
+              <div class="space-y-3 mb-6">
+
+                <!-- Criterion 1 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4 flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    hlmCheckbox
+                    checked
+                    class="mt-1 w-5 h-5 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <div class="flex-1">
+                    <input
+                      hlmInput
+                      type="text"
+                      value="Alle Unit Tests bestehen"
+                      class="w-full font-medium"
+                    />
+                  </div>
+                  <button hlmBtn variant="ghost" size="sm" class="text-slate-400 hover:text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Criterion 2 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4 flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    hlmCheckbox
+                    checked
+                    class="mt-1 w-5 h-5 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <div class="flex-1">
+                    <input
+                      hlmInput
+                      type="text"
+                      value="Code Coverage > 80%"
+                      class="w-full font-medium"
+                    />
+                  </div>
+                  <button hlmBtn variant="ghost" size="sm" class="text-slate-400 hover:text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Criterion 3 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4 flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    hlmCheckbox
+                    checked
+                    class="mt-1 w-5 h-5 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <div class="flex-1">
+                    <input
+                      hlmInput
+                      type="text"
+                      value="Code Review abgeschlossen"
+                      class="w-full font-medium"
+                    />
+                  </div>
+                  <button hlmBtn variant="ghost" size="sm" class="text-slate-400 hover:text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Criterion 4 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4 flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    hlmCheckbox
+                    checked
+                    class="mt-1 w-5 h-5 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <div class="flex-1">
+                    <input
+                      hlmInput
+                      type="text"
+                      value="Dokumentation vollständig"
+                      class="w-full font-medium"
+                    />
+                  </div>
+                  <button hlmBtn variant="ghost" size="sm" class="text-slate-400 hover:text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Criterion 5 -->
+                <div class="bg-white border border-slate-200 rounded-lg p-4 flex items-start gap-3">
+                  <input
+                    type="checkbox"
+                    hlmCheckbox
+                    checked
+                    class="mt-1 w-5 h-5 rounded border-slate-300 text-purple-600 focus:ring-purple-500"
+                  />
+                  <div class="flex-1">
+                    <input
+                      hlmInput
+                      type="text"
+                      value="Deployment erfolgreich"
+                      class="w-full font-medium"
+                    />
+                  </div>
+                  <button hlmBtn variant="ghost" size="sm" class="text-slate-400 hover:text-red-500">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- Add Criterion Button -->
+              <button hlmBtn variant="outline" class="flex w-full">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+                </svg>
+                Kriterium hinzufügen
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Optional Fields Section (Repository, Jira) -->
+      <div class="bg-white rounded-xl shadow-lg border border-slate-200 overflow-hidden mt-6 p-6">
+        <h3 class="text-lg font-semibold text-slate-800 mb-4 flex items-center gap-2">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-slate-600" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+          </svg>
+          Optional (Nach Developer Selection)
+        </h3>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- Repository Link -->
+          <div>
+            <label hlmLabel class="mb-2 block">
+              Repository Link
+            </label>
+            <input
+              hlmInput
+              type="url"
+              placeholder="https://github.com/company/project"
+              class="p-4 w-full"
+            />
+          </div>
+
+          <!-- Jira Project ID -->
+          <div>
+            <label hlmLabel class="mb-2 block">
+              Jira Project ID
+            </label>
+            <input
+              hlmInput
+              type="text"
+              placeholder="PROJ-123"
+              class="p-4 w-full"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="flex flex-col sm:flex-row gap-4 mt-8">
+        <button hlmBtn variant="outline" class="flex flex-1 sm:flex-none px-8">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M7.707 10.293a1 1 0 10-1.414 1.414l3 3a1 1 0 001.414 0l3-3a1 1 0 00-1.414-1.414L11 11.586V6h5a2 2 0 012 2v7a2 2 0 01-2 2H4a2 2 0 01-2-2V8a2 2 0 012-2h5v5.586l-1.293-1.293zM9 4a1 1 0 012 0v2H9V4z" />
+          </svg>
+          Als Entwurf speichern
+        </button>
+
+        <button hlmBtn class="flex flex-1 bg-orange-500 hover:bg-orange-600 px-8">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M12.586 4.586a2 2 0 112.828 2.828l-3 3a2 2 0 01-2.828 0 1 1 0 00-1.414 1.414 4 4 0 005.656 0l3-3a4 4 0 00-5.656-5.656l-1.5 1.5a1 1 0 101.414 1.414l1.5-1.5zm-5 5a2 2 0 012.828 0 1 1 0 101.414-1.414 4 4 0 00-5.656 0l-3 3a4 4 0 105.656 5.656l1.5-1.5a1 1 0 10-1.414-1.414l-1.5 1.5a2 2 0 11-2.828-2.828l3-3z" clip-rule="evenodd" />
+          </svg>
+          Auf Blockchain veröffentlichen
+        </button>
+      </div>
+
+    </main>
+  </div>
+</div>
