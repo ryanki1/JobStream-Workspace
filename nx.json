@@ -1,7 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals"
+    ],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
@@ -28,7 +31,9 @@
           "watchDepsName": "watch-deps"
         }
       },
-      "exclude": ["libs/shared/api-types/*"]
+      "exclude": [
+        "libs/shared/api-types/*"
+      ]
     },
     {
       "plugin": "@nx/playwright/plugin",
@@ -44,7 +49,9 @@
     },
     {
       "plugin": "@nx/js/typescript",
-      "include": ["libs/shared/api-types/*"],
+      "include": [
+        "libs/shared/api-types/*"
+      ],
       "options": {
         "typecheck": {
           "targetName": "typecheck"
@@ -55,8 +62,13 @@
   "targetDefaults": {
     "@angular/build:application": {
       "cache": true,
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     },
     "@nx/eslint:lint": {
       "cache": true,
@@ -69,7 +81,11 @@
     },
     "@nx/jest:jest": {
       "cache": true,
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js"
+      ],
       "options": {
         "passWithNoTests": true
       },
@@ -81,7 +97,19 @@
       }
     },
     "test": {
-      "dependsOn": ["^build"]
+      "dependsOn": [
+        "^build"
+      ]
+    },
+    "@nx/angular:ng-packagr-lite": {
+      "cache": true,
+      "dependsOn": [
+        "^build"
+      ],
+      "inputs": [
+        "production",
+        "^production"
+      ]
     }
   },
   "generators": {
@@ -95,9 +123,13 @@
       "style": "scss"
     },
     "@nx/angular:guard": {
-      "flat": false, 
-      "skipTests": false, 
-      "functional": true 
+      "flat": false,
+      "skipTests": false,
+      "functional": true
+    },
+    "@nx/angular:library": {
+      "linter": "eslint",
+      "unitTestRunner": "none"
     }
   }
 }
