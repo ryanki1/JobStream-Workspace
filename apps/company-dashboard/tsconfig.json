@@ -23,12 +23,6 @@
       "path": "../../libs/shared/ui"
     },
     {
-      "path": "@jobstream-workspace/shared/api-types"
-    },
-    {
-      "path": "@jobstream-workspace/libs/shared/ui"
-    },
-    {
       "path": "./tsconfig.app.json"
     },
     {

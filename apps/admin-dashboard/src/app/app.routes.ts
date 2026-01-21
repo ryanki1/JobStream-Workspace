@@ -5,54 +5,60 @@ import { StartRegistrationComponent } from './components/start-registration.comp
 import { authGuard } from './guards/auth.guard';
 import { LoginComponent } from '@jobstream-workspace/shared-ui';
 import { AdminStatisticsComponent } from './components/admin-statistics.component';
-import { LoginCandidateComponent } from './components/login-candidate.component';
 
 export const appRoutes: Route[] = [
-   {
-    path: 'admin-login',
-    component: LoginComponent,
-    title: 'Admin Login - JobStream',
-  },
-  {
-    path: 'candidate-login',
-    component: LoginCandidateComponent,
-    title: 'Company Login - JobStream',
-  },
-  {
-    path: 'admin-statistics',
-    component: AdminStatisticsComponent,
-    canActivate: [authGuard],
-    title: 'Admin - JobStream - Statistics'
-  },
-  {
-    path: 'admin-list',
-    component: RegistrationListComponent,
-    canActivate: [authGuard],
-    title: 'Admin - JobStream'
-  },
   {
     path: 'admin',
-    redirectTo: '/admin-statistics',
-    pathMatch: 'full'
-  },
-  {
-    path: 'register',
-    redirectTo: '/register/start',
-    pathMatch: 'full'
-  },
-  {
-    path: 'register/start',
-    component: StartRegistrationComponent,
-    title: 'Registrierung starten - JobStream'
-  },
-  {
-    path: 'register/verify',
-    component: VerifyEmailComponent,
-    title: 'E-Mail bestätigen - JobStream'
+    pathMatch: 'full',
+    children: [
+      {
+        path: 'login',
+        component: LoginComponent,
+        title: 'Admin Login - JobStream',
+      },
+      {
+        path: 'statistics',
+        component: AdminStatisticsComponent,
+        canActivate: [authGuard],
+        title: 'Admin - JobStream - Statistics'
+      },
+      {
+        path: 'admin-list',
+        component: RegistrationListComponent,
+        canActivate: [authGuard],
+        title: 'Admin - JobStream'
+      },
+      {
+        path: '',
+        redirectTo: 'login',
+        pathMatch: 'full'
+      },
+    ]
   },
   {
     path: '',
-    redirectTo: '/register/start',
+    redirectTo: 'admin',
     pathMatch: 'full'
-  }
+  },
+  {
+    path: 'register', // TODO [kr] to move to company app
+    pathMatch: 'full',
+    children: [
+      {
+        path: 'start',
+        component: StartRegistrationComponent,
+        title: 'Registrierung starten - JobStream'
+      },
+      {
+        path: 'verify',
+        component: VerifyEmailComponent,
+        title: 'E-Mail bestätigen - JobStream'
+      },
+      {
+        path: '',
+        redirectTo: '/register/start',
+        pathMatch: 'full'
+      }
+    ]
+  },
 ];

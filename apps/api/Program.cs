@@ -173,9 +173,9 @@ builder.Services.AddAuthentication(options =>
 {
     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
     // Google OAuth Credentials (aus appsettings.json oder User Secrets)
-    options.ClientId = builder.Configuration["Authentication:Google:ClientId"]
+    options.ClientId = Environment.GetEnvironmentVariable("ClientId")
         ?? throw new InvalidOperationException("Google ClientId not configured");
-    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]
+    options.ClientSecret = Environment.GetEnvironmentVariable("ClientSecret")
         ?? throw new InvalidOperationException("Google ClientSecret not configured");
 
     // Callback-Pfad explizit setzen (Standard ist /signin-google)

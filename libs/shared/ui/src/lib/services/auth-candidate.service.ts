@@ -1,11 +1,10 @@
-
 import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, tap, catchError, of } from 'rxjs';
 import { UserInfo } from '../models/user-info.model';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthCandidateService {
   private readonly API_URL = 'http://localhost:5252/api';
@@ -23,13 +22,16 @@ export class AuthCandidateService {
    */
   checkAuthStatus(): Observable<UserInfo> {
     return this.http.get<UserInfo>(`${this.API_URL}/user/me`).pipe(
-      tap(userInfo => {
+      tap((userInfo) => {
         this.currentUser.set(userInfo);
         this.isAuthenticated.set(userInfo.isAuthenticated);
       }),
-      catchError(error => {
+      catchError((error) => {
         // Bei Fehler (kein Cookie, CORS, etc.) als nicht-authentifiziert behandeln
-        console.warn('Auth check failed, treating as not authenticated:', error);
+        console.warn(
+          'Auth check failed, treating as not authenticated:',
+          error
+        );
         const notAuthenticatedUser: UserInfo = { isAuthenticated: false };
         this.currentUser.set(notAuthenticatedUser);
         this.isAuthenticated.set(false);

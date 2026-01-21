@@ -1,0 +1,11 @@
+{
+    "admin": {
+        "target": "http://localhost:4201",
+        "secure": false
+    },
+    "company": {
+        "target": "http://localhost:4202",
+        "secure": false,
+        "changeOrigin": true
+    }
+}
